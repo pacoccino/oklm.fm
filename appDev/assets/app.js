@@ -1,30 +1,43 @@
-var audioComponent = null;
+var eve = null;
 var domElements = {};
+var p = true;
 
 var getRadioUrl = function() {
     var url = "http://62.210.247.11/radio/3093";
     return url;
 };
 
+var memory = function() {
+    if(p) {
+        eve.load();
+        eve.play();
+    }
+};
+
 var play = function() {
-    if(!audioComponent) return;
+    if(!eve) return;
 
     domElements.cover && domElements.cover.removeClass("fade");
     domElements.pauseBtn && domElements.pauseBtn.show();
     domElements.playBtn && domElements.playBtn.removeClass("pause");
 
-    audioComponent.load();
-    audioComponent.play();
-
+    setTimeout(memory, 30 * 60 * 1000);
 };
+
 var pause = function() {
-    if(!audioComponent) return;
+    if(!eve) return;
 
     domElements.cover && domElements.cover.addClass("fade");
     domElements.pauseBtn && domElements.pauseBtn.hide();
     domElements.playBtn && domElements.playBtn.addClass("pause");
 
-    audioComponent.pause();
+    eve.pause();
+};
+
+var playpause = function() {
+
+    p ? pause() : play();
+    p = !p;
 };
 
 var browserIncompatible = function() {
@@ -45,14 +58,8 @@ var updateSonginfo = function(data) {
     }
 };
 
-var init = function() {
+var jquelink = function() {
 
-    audioComponent = document.createElement('audio');
-
-    if (!audioComponent.canPlayType('audio/mpeg')) {
-        browserIncompatible();
-        return;
-    }
     domElements.cover = $("#cover");
     domElements.playBtn = $("#cover-resume");
     domElements.pauseBtn = $("#cover-pause");
@@ -62,14 +69,39 @@ var init = function() {
 
     domElements.pauseBtn.click(pause);
     domElements.playBtn.click(play);
+};
 
-    audioComponent.setAttribute('src', getRadioUrl());
+var audiolink = function() {
+    eve.setAttribute('src', getRadioUrl());
+};
 
+var addEvents = function() {
+    $(document).keypress(function(e) {
+        if(e.charCode === 32) {
+            playpause();
+        }
+    });
+};
+
+var init = function() {
+
+    eve = document.createElement('audio');
+
+    jquelink();
+
+    if (!eve.canPlayType('audio/mpeg')) {
+        browserIncompatible();
+        return;
+    }
+
+    audiolink();
 
     var socket = io();
     socket.on('songinfo', function(data){
         updateSonginfo(data);
     });
+
+    addEvents();
 
     play();
 };
