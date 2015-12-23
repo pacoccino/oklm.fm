@@ -1,10 +1,9 @@
-var radioId = 3093;
 var audioComponent = null;
 var domElements = {};
 
 var getRadioUrl = function(radioId) {
-    var url = "http://62.210.247.11/radio/";
-    return url + radioId;
+    var url = "http://62.210.247.11/radio/3093";
+    return url;
 };
 
 var play = function() {
