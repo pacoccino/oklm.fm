@@ -21,6 +21,7 @@ var play = function() {
     domElements.pauseBtn && domElements.pauseBtn.show();
     domElements.playBtn && domElements.playBtn.removeClass("pause");
 
+    memory();
     setTimeout(memory, 30 * 60 * 1000);
 };
 
