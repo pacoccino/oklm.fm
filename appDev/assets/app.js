@@ -1,7 +1,7 @@
 var audioComponent = null;
 var domElements = {};
 
-var getRadioUrl = function(radioId) {
+var getRadioUrl = function() {
     var url = "http://62.210.247.11/radio/3093";
     return url;
 };
@@ -63,7 +63,7 @@ var init = function() {
     domElements.pauseBtn.click(pause);
     domElements.playBtn.click(play);
 
-    audioComponent.setAttribute('src', getRadioUrl(radioId));
+    audioComponent.setAttribute('src', getRadioUrl());
 
 
     var socket = io();
