@@ -1,0 +1,106 @@
+@font-face {
+  font-family: "Caviar";
+  src: url('fonts/CaviarDreams.ttf');
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
+  font-family: Caviar, OpenSans;
+}
+
+a {
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .image {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    width: 350px;
+    height: 350px;
+    padding-bottom:20px;
+    background-color: black;
+
+    &:hover {
+      #cover {
+        opacity: 0.4;
+      }
+      #cover-pause {
+        visibility: visible;
+      }
+    }
+    #cover {
+      position: absolute;
+      left: calc(~"10% + 5px");
+      top: 10%;
+      width: 80%;
+      &.fade {
+        opacity:0.2;
+      }
+    }
+
+    #cover-resume {
+      visibility: hidden;
+      position: absolute;
+      left: 30%;
+      top: 30%;
+      width: 40%;
+      &.pause {
+        visibility: visible;
+      }
+    }
+
+    #cover-pause {
+      visibility: hidden;
+      position: absolute;
+      left: 30%;
+      top: 30%;
+      width: 40%;
+    }
+  }
+  .songinfo {
+    display: block;
+    position: relative;
+    color: white;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .artist {
+      font-weight: 700;
+    }
+    .title {
+      font-weight: 400;
+    }
+  }
+
+  .mfdt {
+    position: fixed;
+    right:20px;
+    bottom: 20px;
+
+    a{
+      text-transform: uppercase;
+      text-decoration: none !important;
+    }
+    color: white;
+    font-size: 0.7em;
+  }
+
+
+}
