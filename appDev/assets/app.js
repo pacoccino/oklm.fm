@@ -13,6 +13,7 @@ var play = function() {
     domElements.pauseBtn && domElements.pauseBtn.show();
     domElements.playBtn && domElements.playBtn.removeClass("pause");
 
+    audioComponent.load();
     audioComponent.play();
 
 };
@@ -23,10 +24,9 @@ var pause = function() {
     domElements.pauseBtn && domElements.pauseBtn.hide();
     domElements.playBtn && domElements.playBtn.addClass("pause");
 
-    audioComponent.load();
     audioComponent.pause();
-
 };
+
 var browserIncompatible = function() {
     alert("Votre navigateur est incompatible, veuillez utiliser l'application officielle");
     window.location = "http://www.oklmradio.com/";
