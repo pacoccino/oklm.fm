@@ -95,6 +95,7 @@
     var showSlogan = function() {
         var slogans = [
             "Radio pirate",
+            "Ecoutez la radio dans le plus grand des calmes",
             "Première sur le Rap",
             "La couronne sur la tête",
             "La premiere fois que t'a cru que t'allais l'entendre, et que tu l'a pas entendu, c'etait sur OKLM.fm",
