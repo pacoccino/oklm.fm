@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OKLM.fm - Radio Ratpi</title>
+
+    <link rel="stylesheet" href="assets/styles/normalize.css"/>
+    <link rel="stylesheet" href="assets/styles/style.css"/>
+
+<!--    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="assets/images/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="manifest" href="assets/images/favicons/manifest.json">
+    <link rel="mask-icon" href="assets/images/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="assets/images/favicons/mstile-144x144.png">-->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
+
+    <meta name="theme-color" content="#ffffff">
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="assets/app.js"></script>
+</head>
+<body>
+<div class="main">
+    <div class="album-bg">
+        <img src="assets/images/pirates.jpg" id="cover-bg">
+    </div>
+
+    <div class="oklm">
+        <div class="logo">
+            <img class="couronne" src="assets/images/couronne.png">
+            <span class="logotxt">OKLM</span><span class="logofm">.fm</span>
+        </div>
+        <div class="slogan">Radio pirate</div>
+    </div>
+
+    <div class="album">
+        <img src="assets/images/pirates.jpg" id="cover">
+        <img src="assets/images/play.png" id="cover-resume">
+        <img src="assets/images/pause.png" id="cover-pause">
+    </div>
+    <div class="songinfo"><a id="a-buy" target="_blank" title="buy"><span class="artist" id="SI-artist"></span> - <span class="title" id="SI-title"></span></a></div>
+    <div class="mfdt"><a target="_blank" href="backstage.html">Informations</a></div>
+</div>
+</body>
+</html>

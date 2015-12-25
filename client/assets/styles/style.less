@@ -1,0 +1,215 @@
+@blur-cover: 10px;
+@bg-bright: 0.2;
+
+@font-face {
+  font-family: "Caviar";
+  src: url('../fonts/CaviarDreams.ttf');
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
+  font-family: Caviar, OpenSans;
+
+  box-sizing: border-box;
+}
+
+a {
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+.main {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .oklm {
+    width: 100%;
+    z-index: 20;
+    position: relative;
+    text-align: center;
+
+    .logo {
+      width: 250px;
+      position: relative;
+      margin: auto;
+
+      //text-shadow: 0 0px 2px black;
+
+      .couronne{
+        width: 100px;
+        padding-bottom: 5px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .logotxt {
+        font-size: 4em;
+        font-weight: 400;
+        color: white;
+      }
+      .logofm {
+        font-size: 2em;
+        font-weight: 400;
+        letter-spacing: 8px;
+
+
+        position: relative;
+        top: -15px;
+        left: -9px;
+
+        display: inline-block;
+        color: white;
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+      }
+    }
+
+    .slogan {
+      padding-top: 10px;
+      width : 50%;
+
+      position: relative;
+      margin: auto;
+      text-align: center;
+
+      font-size: 1em;
+      font-weight: 500;
+      color: white;
+      text-shadow: 0 1px 4px black;
+    }
+  }
+
+  .album-bg {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+
+    img{
+      position: absolute;
+      display: block;
+      margin: auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 80%;
+
+      -webkit-filter: blur(@blur-cover) brightness(@bg-bright) saturate(0.8);
+      -moz-filter: blur(@blur-cover) brightness(@bg-bright) saturate(0.8);
+      filter: blur(@blur-cover) brightness(@bg-bright) saturate(0.8);
+    }
+  }
+
+  .album {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    max-width: 300px;
+    max-height: 300px;
+
+    padding: 50px;
+
+    img {
+      display: block;
+    }
+
+    &:hover {
+      #cover {
+        opacity: 0.4;
+      }
+      #cover-pause {
+        visibility: visible;
+      }
+    }
+    #cover {
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      width: 80%;
+      &.fade {
+        opacity:0.2;
+      }
+    }
+
+    #cover-resume {
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      visibility: hidden;
+      cursor: pointer;
+
+      width: 40%;
+      &.pause {
+        visibility: visible;
+      }
+    }
+
+    #cover-pause {
+      position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      visibility: hidden;
+      cursor: pointer;
+
+      width: 40%;
+    }
+  }
+  .songinfo {
+    display: block;
+    position: relative;
+    color: white;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .artist {
+      font-weight: 700;
+    }
+    .title {
+      font-weight: 400;
+    }
+  }
+
+  .mfdt {
+    position: fixed;
+    right:20px;
+    bottom: 20px;
+
+    a{
+      text-transform: uppercase;
+      text-decoration: none !important;
+    }
+    color: white;
+    font-size: 0.7em;
+  }
+
+
+}

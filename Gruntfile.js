@@ -3,9 +3,9 @@
 module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    //grunt.loadNpmTasks('grunt-contrib-watch');
 
-    var appDir = "appDev/";
+    var appDir = "client/";
     var buildDir = "app/";
 
     grunt.initConfig(
@@ -13,11 +13,11 @@ module.exports = function(grunt) {
             less: {
                 production: {
                     options: {
-                        paths: ["appDev/assets"],
+                        paths: ["client/assets"],
                         compress: true
                     },
                     files: {
-                        "appDev/assets/style.css": appDir + "assets/style.less"
+                        "client/assets/styles/style.css": appDir + "assets/styles/style.less"
                     }
                 }
             },
@@ -35,14 +35,33 @@ module.exports = function(grunt) {
                         },
                         {
                             expand: true,
-                            cwd: appDir + "assets",
+                            cwd: appDir + "assets/images",
                             src: [
-                                "app.js",
-                                "style.css",
-                                "normalize.css",
+                                "logo.png",
                                 "pirates.jpg",
                                 "play.png",
-                                "pause.png"
+                                "pause.png",
+                                "couronne.png",
+                                "favicons/apple-touch-icon-57x57.png",
+                                "favicons/favicon-16x16.png",
+                                "favicons/favicon-32x32.png"
+                            ],
+                            dest: buildDir + "assets/images"
+                        },
+                        {
+                            expand: true,
+                            cwd: appDir + "assets/styles",
+                            src: [
+                                "style.css",
+                                "normalize.css"
+                            ],
+                            dest: buildDir + "assets/styles"
+                        },
+                        {
+                            expand: true,
+                            cwd: appDir + "assets",
+                            src: [
+                                "app.js"
                             ],
                             dest: buildDir + "assets"
                         },

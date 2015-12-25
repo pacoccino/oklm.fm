@@ -10,8 +10,8 @@
 
     var memory = function () {
         if (p) {
-            eve.load();
-            eve.play();
+            //eve.load();
+            //eve.play();
         }
     };
 
@@ -61,17 +61,20 @@
 
         if (data.cover) {
             domElements.cover.attr("src", uris.c + data.cover);
+            domElements.coverBg.attr("src", uris.c + data.cover);
         }
     };
 
     var jquelink = function () {
 
         domElements.cover = $("#cover");
+        domElements.coverBg = $("#cover-bg");
         domElements.playBtn = $("#cover-resume");
         domElements.pauseBtn = $("#cover-pause");
         domElements.artist = $("#SI-artist");
         domElements.title = $("#SI-title");
         domElements.link = $("#a-buy");
+        domElements.slogan = $(".slogan");
 
         domElements.pauseBtn.click(pause);
         domElements.playBtn.click(play);
@@ -87,6 +90,19 @@
                 playpause();
             }
         });
+    };
+
+    var showSlogan = function() {
+        var slogans = [
+            "Radio pirate",
+            "Première sur le Rap",
+            "La premiere fois que t'a cru que t'allais l'entendre, et que tu l'a pas entendu, c'etait sur OKLM.fm",
+        ];
+
+        var slogan = slogans[0];
+
+        domElements.slogan.text(slogan);
+
     };
 
     var init = function () {
@@ -109,6 +125,8 @@
 
         addEvents();
 
+        showSlogan();
+        setInterval(showSlogan, 20 * 1000);
         play();
     };
 
