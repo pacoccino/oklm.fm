@@ -10,8 +10,8 @@
 
     var memory = function () {
         if (p) {
-            //eve.load();
-            //eve.play();
+            eve.load();
+            eve.play();
         }
     };
 
