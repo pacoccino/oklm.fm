@@ -68,10 +68,10 @@
         domElements.title.text(data.title || "");
 
         if (data.buy_link) {
-            domElements.link.attr("href", data.buy_link);
+            domElements.itunes.attr("href", data.buy_link);
         }
         else {
-            domElements.link.attr("href", null);
+            domElements.itunes.attr("href", null);
         }
 
         if (data.cover) {
@@ -92,9 +92,9 @@
         domElements.pauseBtn = $("#cover-pause");
         domElements.artist = $("#SI-artist");
         domElements.title = $("#SI-title");
-        domElements.link = $("#a-buy");
         domElements.slogan = $(".slogan");
         domElements.mosSearch = $("#mos-search");
+        domElements.itunes = $("#itunes");
 
         domElements.pauseBtn.click(pause);
         domElements.playBtn.click(play);

@@ -40,6 +40,7 @@ module.exports = function(grunt) {
                                 "logo.png",
                                 "pirates.jpg",
                                 "deezer.png",
+                                "itunes.png",
                                 "play.png",
                                 "pause.png",
                                 "couronne.png",
