@@ -39,6 +39,7 @@ module.exports = function(grunt) {
                             src: [
                                 "logo.png",
                                 "pirates.jpg",
+                                "deezer.png",
                                 "play.png",
                                 "pause.png",
                                 "couronne.png",

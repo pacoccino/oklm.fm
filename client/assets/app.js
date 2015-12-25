@@ -47,6 +47,21 @@
         window.location = "http://www.oklmradio.com/";
     };
 
+    var cleanSearchString = function(str) {
+        var low = str.toLowerCase();
+        var res = low;
+
+        res = res.replace('(', '');
+        res = res.replace(')', '');
+
+        var iFeat = res.indexOf('feat');
+        if(iFeat !== -1) {
+            res = res.substr(0, iFeat);
+        }
+
+        return res;
+    };
+
     var updateSonginfo = function (data) {
 
         domElements.artist.text(data.artist || "");
@@ -63,6 +78,10 @@
             domElements.cover.attr("src", uris.c + data.cover);
             domElements.coverBg.attr("src", uris.c + data.cover);
         }
+
+        var searchString = cleanSearchString(data.artist) + " " + cleanSearchString(data.title);
+        var href = "http://www.deezer.com/search/" + searchString;
+        domElements.mosSearch.attr("href", encodeURI(href));
     };
 
     var jquelink = function () {
@@ -75,6 +94,7 @@
         domElements.title = $("#SI-title");
         domElements.link = $("#a-buy");
         domElements.slogan = $(".slogan");
+        domElements.mosSearch = $("#mos-search");
 
         domElements.pauseBtn.click(pause);
         domElements.playBtn.click(play);
