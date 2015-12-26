@@ -38,6 +38,7 @@ module.exports = function(grunt) {
                             cwd: appDir + "assets/images",
                             src: [
                                 "logo.png",
+                                "applestore.svg",
                                 "pirates.jpg",
                                 "deezer.png",
                                 "itunes.png",

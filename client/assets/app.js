@@ -69,9 +69,11 @@
 
         if (data.buy_link) {
             domElements.itunes.attr("href", data.buy_link);
+            domElements.itunes.show();
         }
         else {
             domElements.itunes.attr("href", null);
+            domElements.itunes.hide();
         }
 
         if (data.cover) {
