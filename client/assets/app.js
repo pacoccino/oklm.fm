@@ -48,8 +48,8 @@
     };
 
     var cleanSearchString = function(str) {
-        var low = str.toLowerCase();
-        var res = low;
+        str = str || "";
+        var res = str.toLowerCase();
 
         res = res.replace('(', '');
         res = res.replace(')', '');
@@ -81,9 +81,15 @@
             domElements.coverBg.attr("src", uris.c + data.cover);
         }
 
-        var searchString = cleanSearchString(data.artist) + " " + cleanSearchString(data.title);
-        var href = "http://www.deezer.com/search/" + searchString;
-        domElements.mosSearch.attr("href", encodeURI(href));
+        if(data.artist && data.title) {
+            var searchString = cleanSearchString(data.artist) + " " + cleanSearchString(data.title);
+            var href = "http://www.deezer.com/search/" + searchString;
+            domElements.mosSearch.attr("href", encodeURI(href));
+            domElements.mosSearch.show();
+        }
+        else {
+            domElements.mosSearch.hide();
+        }
     };
 
     var jquelink = function () {
