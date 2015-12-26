@@ -47,21 +47,48 @@
         window.location = "http://www.oklmradio.com/";
     };
 
+    var cleanSearchString = function(str) {
+        str = str || "";
+        var res = str.toLowerCase();
+
+        res = res.replace('(', '');
+        res = res.replace(')', '');
+
+        var iFeat = res.indexOf('feat');
+        if(iFeat !== -1) {
+            res = res.substr(0, iFeat);
+        }
+
+        return res;
+    };
+
     var updateSonginfo = function (data) {
 
         domElements.artist.text(data.artist || "");
         domElements.title.text(data.title || "");
 
         if (data.buy_link) {
-            domElements.link.attr("href", data.buy_link);
+            domElements.itunes.attr("href", data.buy_link);
+            domElements.itunes.show();
         }
         else {
-            domElements.link.attr("href", null);
+            domElements.itunes.attr("href", null);
+            domElements.itunes.hide();
         }
 
         if (data.cover) {
             domElements.cover.attr("src", uris.c + data.cover);
             domElements.coverBg.attr("src", uris.c + data.cover);
+        }
+
+        if(data.artist && data.title) {
+            var searchString = cleanSearchString(data.artist) + " " + cleanSearchString(data.title);
+            var href = "http://www.deezer.com/search/" + searchString;
+            domElements.mosSearch.attr("href", encodeURI(href));
+            domElements.mosSearch.show();
+        }
+        else {
+            domElements.mosSearch.hide();
         }
     };
 
@@ -73,8 +100,9 @@
         domElements.pauseBtn = $("#cover-pause");
         domElements.artist = $("#SI-artist");
         domElements.title = $("#SI-title");
-        domElements.link = $("#a-buy");
         domElements.slogan = $(".slogan");
+        domElements.mosSearch = $("#mos-search");
+        domElements.itunes = $("#itunes");
 
         domElements.pauseBtn.click(pause);
         domElements.playBtn.click(play);
@@ -95,6 +123,7 @@
     var showSlogan = function() {
         var slogans = [
             "Radio pirate",
+            "Ecoutez la radio dans le plus grand des calmes",
             "Première sur le Rap",
             "La couronne sur la tête",
             "La premiere fois que t'a cru que t'allais l'entendre, et que tu l'a pas entendu, c'etait sur OKLM.fm",

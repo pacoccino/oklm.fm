@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
 
     <meta charset="UTF-8">
     <title>OKLM.fm - Radio Ratpi</title>
@@ -12,7 +13,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
-
+    <meta property="og:image" content="assets/images/logo.png" />
     <meta name="theme-color" content="#ffffff">
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -28,17 +29,45 @@
     <div class="oklm">
         <div class="logo">
             <img class="couronne" src="assets/images/couronne.png">
-            <span class="logotxt">OKLM</span><span class="logofm">.fm</span>
+            <div class="title">
+                <span class="logotxt">OKLM</span><span class="logofm">.fm</span>
+            </div>
         </div>
         <div class="slogan">Radio pirate</div>
     </div>
 
     <div class="album">
-        <img src="assets/images/pirates.jpg" id="cover">
-        <img src="assets/images/play.png" id="cover-resume">
-        <img src="assets/images/pause.png" id="cover-pause">
+        <div class="image">
+            <img src="assets/images/pirates.jpg" id="cover">
+            <img src="assets/images/play.png" id="cover-resume">
+            <img src="assets/images/pause.png" id="cover-pause">
+        </div>
+        <div class="links">
+            <div class="link">
+                <a target="_blank" id="mos-search" title="Chercher sur Deezer"><img src="assets/images/deezer.png"></a>
+            </div>
+            <div class="link">
+                <a target="_blank" id="itunes" title="Acheter sur iTunes"><img src="assets/images/itunes.png"></a>
+            </div>
+        </div>
     </div>
-    <div class="songinfo"><a id="a-buy" target="_blank" title="buy"><span class="artist" id="SI-artist"></span> - <span class="title" id="SI-title"></span></a></div>
+
+    <div class="apps">
+        <div class="text">
+            Retrouvez la version officielle sur
+        </div>
+        <div class="android">
+            <a target="_blank" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
+        </div>
+        <div class="apple">
+            <a target="_blank" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
+        </div>
+    </div>
+
+    <div class="songinfo">
+        <span class="artist" id="SI-artist"></span> - <span class="title" id="SI-title"></span>
+    </div>
+
     <div class="mfdt"><a target="_blank" href="backstage.html">Informations</a></div>
 
     <script>
