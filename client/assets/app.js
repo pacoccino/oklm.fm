@@ -1,7 +1,7 @@
 (function() {
-    var eve = null;
+    var audioElement = null;
     var domElements = {};
-    var p = true;
+    var playing = true;
 
     var uris = {
         r: "http://62.210.247.11/radio/3093",
@@ -9,14 +9,14 @@
     };
 
     var memory = function () {
-        if (p) {
-            eve.load();
-            eve.play();
+        if (playing) {
+            audioElement.load();
+            audioElement.play();
         }
     };
 
     var play = function () {
-        if (!eve) return;
+        if (!audioElement) return;
 
         domElements.cover && domElements.cover.removeClass("fade");
         domElements.pauseBtn && domElements.pauseBtn.show();
@@ -24,22 +24,26 @@
 
         memory();
         setTimeout(memory, 30 * 60 * 1000);
+
+        ga('send', 'event', 'play');
     };
 
     var pause = function () {
-        if (!eve) return;
+        if (!audioElement) return;
 
         domElements.cover && domElements.cover.addClass("fade");
         domElements.pauseBtn && domElements.pauseBtn.hide();
         domElements.playBtn && domElements.playBtn.addClass("pause");
 
-        eve.pause();
+        audioElement.pause();
+
+        ga('send', 'event', 'pause');
     };
 
     var playpause = function () {
 
-        p ? pause() : play();
-        p = !p;
+        playing ? pause() : play();
+        playing = !playing;
     };
 
     var browserIncompatible = function () {
@@ -84,11 +88,11 @@
         if(data.artist && data.title) {
             var searchString = cleanSearchString(data.artist) + " " + cleanSearchString(data.title);
             var href = "http://www.deezer.com/search/" + searchString;
-            domElements.mosSearch.attr("href", encodeURI(href));
-            domElements.mosSearch.show();
+            domElements.deezerSearch.attr("href", encodeURI(href));
+            domElements.deezerSearch.show();
         }
         else {
-            domElements.mosSearch.hide();
+            domElements.deezerSearch.hide();
         }
     };
 
@@ -101,22 +105,39 @@
         domElements.artist = $("#SI-artist");
         domElements.title = $("#SI-title");
         domElements.slogan = $(".slogan");
-        domElements.mosSearch = $("#mos-search");
-        domElements.itunes = $("#itunes");
+        domElements.deezerSearch = $("#deezer-search");
+        domElements.itunes = $("#itunes-search");
 
         domElements.pauseBtn.click(pause);
         domElements.playBtn.click(play);
     };
 
     var audiolink = function () {
-        eve.setAttribute('src', uris.r);
+        audioElement.setAttribute('src', uris.r);
     };
 
     var addEvents = function () {
         $(document).keypress(function (e) {
             if (e.charCode === 32) {
+                ga('send', 'event', 'spacebar');
                 playpause();
             }
+        });
+
+        $('#playstore').click(function() {
+            ga('send', 'event', 'mobileapp', 'play store');
+        });
+        $('#applestore').click(function() {
+            ga('send', 'event', 'mobileapp', 'apple store');
+        });
+        $('#informations').click(function() {
+            ga('send', 'event', 'informations');
+        });
+        $('#deezer-search').click(function() {
+            ga('send', 'event', 'searchsong', 'deezer');
+        });
+        $('#itunes-search').click(function() {
+            ga('send', 'event', 'searchsong', 'itunes');
         });
     };
 
@@ -137,11 +158,11 @@
 
     var init = function () {
 
-        eve = document.createElement('audio');
+        audioElement = document.createElement('audio');
 
         jquelink();
 
-        if (!eve.canPlayType('audio/mpeg')) {
+        if (!audioElement.canPlayType('audio/mpeg')) {
             browserIncompatible();
             return;
         }
