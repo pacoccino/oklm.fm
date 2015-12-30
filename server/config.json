@@ -4,5 +4,6 @@
     "messages": {
         "songInfo": "songinfo"
     },
-    "crawlInterval": 8000
+    "crawlInterval": 8000,
+    "appFolder": "app"
 }

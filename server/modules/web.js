@@ -26,7 +26,7 @@ class WebServer {
 
         app.set('port', process.env.PORT || Config.port);
 
-        app.use(express.static('app'));
+        app.use(express.static(Config.appFolder));
 
         var server = app.listen(app.get('port'));
 
