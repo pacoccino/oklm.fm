@@ -8,13 +8,13 @@ var Logger = require('./logger');
 
 class WebServer {
 
-    constructor(crawler) {
-        if(!(crawler && crawler.registerWebServer)) return;
+    constructor(connector) {
+        if(!connector) return;
 
         this.songInfo = null;
 
         this.initializeWebServer();
-        this.attachToWorker(crawler);
+        this.linkConnector(connector);
 
         Logger.info("Web ready");
     }
@@ -41,8 +41,8 @@ class WebServer {
         });
     };
 
-    attachToWorker(worker) {
-        worker.registerWebServer(this);
+    linkConnector(connector) {
+        connector.on('event', this.workerEvent.bind(this))
     }
 
     workerEvent(event) {

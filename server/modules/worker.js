@@ -8,13 +8,13 @@ var apiUrl = "http://oklmtitle.radioking.fr/api/radio/" + Config.radioId + "/";
 
 class CrawlWorker {
 
-    constructor() {
+    constructor(connector) {
         this.songState = {
             artist: null,
             title: null
         };
 
-        this.webServers = [];
+        this.linkConnector(connector);
 
         this.initCrawler();
 
@@ -26,19 +26,12 @@ class CrawlWorker {
         setInterval(updater, Config.crawlInterval);
     };
 
-    registerWebServer(webServer) {
-        if(!(webServer && webServer.workerEvent)) return;
-
-        this.webServers.push(webServer);
-
-        //TODO put on map
-    };
+    linkConnector(connector) {
+        this.connector = connector;
+    }
 
     notifyWebServers(event) {
-        for (var i = 0; i < this.webServers.length; i++) {
-            var webServer = this.webServers[i];
-            webServer.workerEvent(event);
-        }
+        this.connector.emit('event', event);
     };
 
     static newSongEvent(song) {
