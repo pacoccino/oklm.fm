@@ -44,6 +44,7 @@ module.exports = function(grunt) {
                                 "itunes.png",
                                 "play.png",
                                 "pause.png",
+                                "history.png",
                                 "close.png",
                                 "leftarrow.png",
                                 "couronne.png",

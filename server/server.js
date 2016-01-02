@@ -53,6 +53,7 @@ var getLive = function() {
         songState = song;
         broadcast('songinfo', songState);
         //console.log(songState);
+        getHistory();
       }
     }
   });
@@ -72,7 +73,7 @@ var getHistory = function() {
     if (!error && response.statusCode === 200 && body.status === 'success') {
 
       var songs = body.data;
-      //console.log(songs.length);
+      broadcast('songhistory', songs);
     }
     else {
       console.log("error", error);
@@ -82,7 +83,7 @@ var getHistory = function() {
 
 var updateApi = function() {
   getLive();
-  //getHistory();
+  getHistory();
 };
 
 io.on('connection', function (socket) {

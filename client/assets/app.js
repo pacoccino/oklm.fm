@@ -46,6 +46,20 @@
         playing = !playing;
     };
 
+    var openHistory = function() {
+        $(".album-cover").addClass("hide");
+        setTimeout(function() {
+            $('.history').addClass("show");
+        }, 800);
+    };
+
+    var closeHistory = function() {
+        $('.history').removeClass("show");
+        setTimeout(function() {
+            $(".album-cover").removeClass("hide");
+        }, 800);
+    };
+
     var browserIncompatible = function () {
         alert("Votre navigateur est incompatible, veuillez utiliser l'application officielle");
         window.location = "http://www.oklmradio.com/";
@@ -66,6 +80,19 @@
         return res;
     };
 
+    var updateSongHistory = function(songs) {
+        var songHistoryDiv = $(".songs");
+        songHistoryDiv.empty();
+
+        for (var i = 0; i < songs.length; i++) {
+            var song = songs[i];
+            var songDiv = $("<div class='song'></div>");
+            songDiv.text(song.artist + ' - ' + song.title);
+
+            songHistoryDiv.append(songDiv);
+        }
+    };
+
     var updateSonginfo = function (data) {
 
         domElements.artist.text(data.artist || "");
@@ -81,8 +108,11 @@
         }
 
         if (data.cover) {
-            domElements.cover.attr("src", uris.c + data.cover);
-            domElements.coverBg.attr("src", uris.c + data.cover);
+            var coverUrl = uris.c + data.cover;
+            //coverUrl = "http://lorempixel.com/image_output/abstract-q-c-120-120-9.jpg";
+            domElements.cover.attr("src", coverUrl);
+            domElements.coverBg.attr("src", coverUrl);
+            domElements.coverRv.attr("src", coverUrl);
         }
 
         if(data.artist && data.title) {
@@ -100,6 +130,7 @@
 
         domElements.cover = $("#cover");
         domElements.coverBg = $("#cover-bg");
+        domElements.coverRv = $("#cover-rv");
         domElements.playBtn = $("#cover-resume");
         domElements.pauseBtn = $("#cover-pause");
         domElements.artist = $("#SI-artist");
@@ -107,9 +138,13 @@
         domElements.slogan = $(".slogan");
         domElements.deezerSearch = $("#deezer-search");
         domElements.itunes = $("#itunes-search");
+        domElements.historyBtn = $("#history-open-btn");
+        domElements.historyBtnClose = $("#history-close-btn");
 
         domElements.pauseBtn.click(pause);
         domElements.playBtn.click(play);
+        domElements.historyBtn.click(openHistory);
+        domElements.historyBtnClose.click(closeHistory);
     };
 
     var audiolink = function () {
@@ -172,6 +207,9 @@
         var socket = io();
         socket.on('songinfo', function (data) {
             updateSonginfo(data);
+        });
+        socket.on('songhistory', function (data) {
+            updateSongHistory(data);
         });
 
         addEvents();
