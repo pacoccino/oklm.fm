@@ -1,7 +1,7 @@
 "use strict";
 
-var request = require('./fakerequest');
-//var request = require('request');
+//var request = require('./fakerequest');
+var request = require('request');
 var Config = require('../config.json');
 
 var apiUrl = "http://oklmtitle.radioking.fr/api/radio/" + Config.radioId + "/";
