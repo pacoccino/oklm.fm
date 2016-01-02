@@ -44,6 +44,8 @@ module.exports = function(grunt) {
                                 "itunes.png",
                                 "play.png",
                                 "pause.png",
+                                "close.png",
+                                "leftarrow.png",
                                 "couronne.png",
                                 "favicons/apple-touch-icon-57x57.png",
                                 "favicons/favicon-16x16.png",
