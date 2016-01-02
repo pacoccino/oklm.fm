@@ -8,6 +8,13 @@
         c: "http://oklmtitle.radioking.fr/api/track/cover/"
     };
 
+    var slogans = [
+        "Radio pirate",
+        "Ecoutez la radio dans le plus grand des calmes",
+        "Première sur le Rap",
+        "La couronne sur la tête"
+    ];
+
     var memory = function () {
         if (playing) {
             audioElement.load();
@@ -142,13 +149,6 @@
     };
 
     var showSlogan = function() {
-        var slogans = [
-            "Radio pirate",
-            "Ecoutez la radio dans le plus grand des calmes",
-            "Première sur le Rap",
-            "La couronne sur la tête",
-            "La premiere fois que t'a cru que t'allais l'entendre, et que tu l'a pas entendu, c'etait sur OKLM.fm",
-        ];
 
         var sId = Math.floor(Math.random() * 1000) % slogans.length;
         var slogan = slogans[sId];
