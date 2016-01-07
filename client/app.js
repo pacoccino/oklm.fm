@@ -27,10 +27,6 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         $scope.historyOpened = false;
     };
 
-    $scope.historyExternalHref = function(song) {
-        return song.buy_link;
-    };
-
     var safePlay = function () {
         if ($scope.playing) {
             audioElement.load();
@@ -64,21 +60,6 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
     var browserIncompatible = function () {
         alert("Votre navigateur est incompatible, veuillez utiliser l'application officielle");
         window.location = "http://www.oklmradio.com/";
-    };
-
-    var cleanSearchString = function(str) {
-        str = str || "";
-        var res = str.toLowerCase();
-
-        res = res.replace('(', '');
-        res = res.replace(')', '');
-
-        var iFeat = res.indexOf('feat');
-        if(iFeat !== -1) {
-            res = res.substr(0, iFeat);
-        }
-
-        return res;
     };
 
     var audiolink = function () {
@@ -116,14 +97,34 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         $scope.motto = slogans[sId];
     };
 
+    var cleanString = function(str) {
+        str = str || "";
+        var res = str.toLowerCase();
+
+        res = res.replace('(', '');
+        res = res.replace(')', '');
+
+        var iFeat = res.indexOf('feat');
+        if(iFeat !== -1) {
+            res = res.substr(0, iFeat);
+        }
+
+        return res;
+    };
+
+    var getSearchString = function(song) {
+        return cleanString(song.artist) + " " + cleanString(song.title);
+    };
+
+    var deezerLink = function(song) {
+        return "http://www.deezer.com/search/" + getSearchString(song);
+    };
+
     var updateSongInfo = function(data) {
         $scope.song = data;
 
         if(data.artist && data.title) {
-            var searchString = cleanSearchString(data.artist) + " " + cleanSearchString(data.title);
-
-            var deezerHref = "http://www.deezer.com/search/" + searchString;
-            $scope.song.deezerUrl = deezerHref;
+            $scope.song.deezerUrl = deezerLink(data);
         }
         else {
             $scope.song.deezerUrl = null;
@@ -132,6 +133,10 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
 
     var updateSongHistory = function(data) {
         $scope.history = data;
+    };
+
+    $scope.historyExternalHref = function(song) {
+        return song.buy_link;
     };
 
     var init = function () {
