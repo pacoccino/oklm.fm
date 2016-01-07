@@ -14,6 +14,8 @@ class CrawlWorker {
             title: null
         };
 
+        this.songHistory = [];
+
         this.linkConnector(connector);
 
         this.initCrawler();
@@ -24,6 +26,8 @@ class CrawlWorker {
     initCrawler() {
         var updater = this.updateApi.bind(this);
         setInterval(updater, Config.crawlInterval);
+        this.getLive();
+        this.getHistory();
     };
 
     linkConnector(connector) {
@@ -42,6 +46,18 @@ class CrawlWorker {
 
         return event;
     }
+    static historyEvent(songs) {
+        var event = {};
+
+        event.type = "songhistory";
+        event.data = songs;
+
+        return event;
+    }
+
+    static isDifferentSong(song1, song2) {
+        return (song1.artist !== song2.artist || song1.title !== song2.title);
+    }
 
     getLive() {
         var self = this;
@@ -57,17 +73,19 @@ class CrawlWorker {
             if (!error && response.statusCode === 200 && body.status === 'success') {
 
                 var song = body.data;
-                if(self.songState.artist !== song.artist || self.songState.title !== song.title) {
+                if(Worker.isDifferentSong(self.songState, song)) {
                     self.songState = song;
 
                     var event = CrawlWorker.newSongEvent(song);
                     self.notifyWebServers(event);
+                    self.getHistory();
                 }
             }
         });
     };
 
     getHistory() {
+        var self = this;
         var limit = 20;
         var url = apiUrl + "track/ckoi?limit="+limit;
 
@@ -81,7 +99,12 @@ class CrawlWorker {
             if (!error && response.statusCode === 200 && body.status === 'success') {
 
                 var songs = body.data;
-                //console.log(songs.length);
+                if(self.songHistory.length === 0 || Worker.isDifferentSong(songs[0], self.songHistory[0])) {
+                    self.songHistory = songs;
+
+                    var event = CrawlWorker.historyEvent(songs);
+                    self.notifyWebServers(event);
+                }
             }
             else {
                 console.log("error", error);
@@ -91,7 +114,6 @@ class CrawlWorker {
 
     updateApi() {
         this.getLive();
-        //getHistory();
     };
 }
 
