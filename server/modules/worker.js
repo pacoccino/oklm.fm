@@ -3,6 +3,7 @@
 //var request = require('./fakerequest');
 var request = require('request');
 var Config = require('../config.json');
+var Logger = require('./logger');
 
 var apiUrl = "http://oklmtitle.radioking.fr/api/radio/" + Config.radioId + "/";
 
@@ -20,7 +21,7 @@ class CrawlWorker {
 
         this.initCrawler();
 
-        console.log("Worker ready");
+        Logger.info("Worker ready");
     }
 
     initCrawler() {
@@ -81,6 +82,9 @@ class CrawlWorker {
                     self.getHistory();
                 }
             }
+            else {
+                Logger.error(error);
+            }
         });
     };
 
@@ -107,7 +111,7 @@ class CrawlWorker {
                 }
             }
             else {
-                console.log("error", error);
+                Logger.error(error);
             }
         });
     };
