@@ -19,7 +19,11 @@ Connector.prototype.listenAsWorker = function() {
 
     if(this.binded) return;
 
-    var server = http.createServer();
+    var sillyMiddleware = function(req,res) {
+        res.writeHead(200, {"Content-Type": "text/plain"});
+        res.end("Worker empty http server");
+    };
+    var server = http.createServer(sillyMiddleware);
     server.listen(Config.workerPort);
 
     var io = socketio(server);
