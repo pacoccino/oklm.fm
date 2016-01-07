@@ -12,6 +12,7 @@ class WebServer {
         if(!connector) return;
 
         this.songInfo = null;
+        this.songHistory = null;
 
         this.initializeWebServer();
         this.linkConnector(connector);
@@ -35,8 +36,11 @@ class WebServer {
         self.io.on('connection', function (socket) {
             Logger.silly("New socket");
 
-            if(self.songState) {
-                socket.emit('songinfo', self.songInfo);
+            if(self.songInfo) {
+                socket.emit(Config.messages.songInfo, self.songInfo);
+            }
+            if(self.songHistory) {
+                socket.emit(Config.messages.songHistory, self.songHistory);
             }
         });
     };
@@ -49,18 +53,29 @@ class WebServer {
         if(!event) return;
 
         switch(event.type) {
-            case "songinfo":
+            case Config.messages.songInfo:
                 this.newSongInfo(event.data);
+                break;
+            case Config.messages.songHistory:
+                this.newSongHistory(event.data);
                 break;
         }
     };
 
     newSongInfo(songinfo) {
-        Logger.silly("Broadcast songinfo");
+        Logger.silly("Broadcast song info");
 
         this.songInfo = songinfo;
 
         this.broadcast(Config.messages.songInfo, this.songInfo);
+    };
+
+    newSongHistory(history) {
+        Logger.silly("Broadcast song history");
+
+        this.songHistory = history;
+
+        this.broadcast(Config.messages.songHistory, this.songHistory);
     };
 
     broadcast(message, data) {
