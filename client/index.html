@@ -39,12 +39,12 @@
     <div class="central-panel">
 
         <div class="album-cover">
-            <img src="assets/images/pirates.jpg" ng-src="song.coverUrl" id="cover">
-            <img src="assets/images/play.png" id="cover-resume">
-            <img src="assets/images/pause.png" id="cover-pause">
+            <img src="assets/images/pirates.jpg" ng-src="song.coverUrl" id="cover" ng-class="{!playing: 'fade'}">
+            <img src="assets/images/play.png" id="cover-resume" ng-click="play()" ng-hide="playing">
+            <img src="assets/images/pause.png" id="cover-pause" ng-click="pause()" ng-show="playing">
         </div>
 
-        <div class="history-opener" ng-hide="historyOpened">
+        <div class="history-opener" ng-click="openHistory()" ng-hide="historyOpened">
             <img src="assets/images/history.png" />
         </div>
 
@@ -53,7 +53,7 @@
                 <a target="_blank" id="deezer-search" title="Chercher sur Deezer" ng-href="song.deezerUrl" ng-show="song.deezerUrl"><img src="assets/images/deezer.png"></a>
             </div>
             <div class="link">
-                <a target="_blank" id="itunes-search" title="Acheter sur iTunes" ng-href="song.buyUrl" ng-show="song.buyUrl"><img src="assets/images/itunes.png"></a>
+                <a target="_blank" id="itunes-search" title="Acheter sur iTunes" ng-href="song.buy_link" ng-show="song.buy_link"><img src="assets/images/itunes.png"></a>
             </div>
         </div>
     </div>
@@ -72,11 +72,11 @@
 
     <div class="songinfo">
         <span class="artist" ng-bind="song.artist"></span>
-        <span ng-show="song.artist && song.title"> - </span>
+        <span ng-show="song && song.artist && song.title"> - </span>
         <span class="title" ng-bind="song.title"></span>
     </div>
 
-    <div class="mfdt"><a target="_blank" id="informations" href="backstage.html">Informations</a></div>
+    <div class="informations"><a target="_blank" id="informations" href="backstage.html">Informations</a></div>
 
     <div class="history-container" ng-show="historyOpened">
         <div class="history">
@@ -84,12 +84,12 @@
                 Historique
             </div>
             <div class="songs">
-                <div class="song" ng-repeat="song in history">
-                    <span class="artist" ng-bind="song.artist"></span>
-                    -
-                    <span class="title" ng-bind="song.title">fezifjezifj</span>
+                <div class="song" ng-repeat="histSong in history">
+                    <span class="artist" ng-bind="histSong.artist"></span>
+                    <span ng-show="histSong && histSong.artist && histSong.title"> - </span>
+                    <span class="title" ng-bind="histSong.title">fezifjezifj</span>
                     <div class="link">
-                        <span class="hover-act">O.</span>
+                        <a class="hover-act" ng-href="historyExternalHref(histSong)">O.</a>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,6 @@
 
         ga('create', 'UA-68373171-3', 'auto');
         ga('send', 'pageview');
-
     </script>
 </div>
 </body>
