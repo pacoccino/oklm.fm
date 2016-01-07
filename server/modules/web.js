@@ -3,7 +3,7 @@
 var express = require('express');
 var socketio = require('socket.io');
 
-var Config = require('../config.json');
+var Config = require('./config.js');
 var Logger = require('./logger');
 
 class WebServer {
@@ -26,7 +26,7 @@ class WebServer {
 
         app.set('port', process.env.PORT || Config.port);
 
-        app.use(express.static(Config.appFolder));
+        app.use(express.static(Config.publicFolder));
 
         var server = app.listen(app.get('port'));
 

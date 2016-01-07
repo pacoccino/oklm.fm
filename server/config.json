@@ -2,8 +2,10 @@
     "port": 8888,
     "radioId": 3093,
     "messages": {
-        "songInfo": "songinfo"
+        "songInfo": "songinfo",
+        "songHistory": "songhistory"
     },
+    "apiUrl":  "http://oklmtitle.radioking.fr/api/radio/3093/",
     "crawlInterval": 8000,
-    "appFolder": "app"
+    "publicFolder": "app"
 }

@@ -2,10 +2,8 @@
 
 //var request = require('./fakerequest');
 var request = require('request');
-var Config = require('../config.json');
+var Config = require('./config.js');
 var Logger = require('./logger');
-
-var apiUrl = "http://oklmtitle.radioking.fr/api/radio/" + Config.radioId + "/";
 
 class CrawlWorker {
 
@@ -42,7 +40,7 @@ class CrawlWorker {
     static newSongEvent(song) {
         var event = {};
 
-        event.type = "songinfo";
+        event.type = Config.messages.songInfo;
         event.data = song;
 
         return event;
@@ -50,7 +48,7 @@ class CrawlWorker {
     static historyEvent(songs) {
         var event = {};
 
-        event.type = "songhistory";
+        event.type = Config.messages.songHistory;
         event.data = songs;
 
         return event;
@@ -62,7 +60,7 @@ class CrawlWorker {
 
     getLive() {
         var self = this;
-        var url = apiUrl + "track/live";
+        var url = Config.apiUrl + "track/live";
 
         var requestObject  = {
             url: url,
@@ -91,7 +89,7 @@ class CrawlWorker {
     getHistory() {
         var self = this;
         var limit = 20;
-        var url = apiUrl + "track/ckoi?limit="+limit;
+        var url = Config.apiUrl + "track/ckoi?limit="+limit;
 
         var requestObject  = {
             url: url,
