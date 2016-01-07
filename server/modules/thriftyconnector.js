@@ -2,7 +2,6 @@ var EventEmitter = require('events').EventEmitter;
 
 var Connector = function() {
     EventEmitter.call(this);
-
 };
 
 Connector.prototype = Object.create(EventEmitter.prototype);

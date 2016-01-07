@@ -24,7 +24,7 @@ class WebServer {
         var self = this;
         var app = express();
 
-        app.set('port', process.env.PORT || Config.port);
+        app.set('port', Config.port);
 
         app.use(express.static(Config.publicFolder));
 

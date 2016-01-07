@@ -7,5 +7,7 @@
     },
     "apiUrl":  "http://oklmtitle.radioking.fr/api/radio/3093/",
     "crawlInterval": 8000,
-    "publicFolder": "app"
+    "publicFolder": "app",
+    "workerUrl": "localhost",
+    "workerPort": 8050
 }
