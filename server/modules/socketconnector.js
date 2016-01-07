@@ -6,6 +6,8 @@ var Config = require('./config');
 
 var Connector = function() {
     EventEmitter.call(this);
+
+    this.binded = false;
 };
 
 Connector.prototype = Object.create(EventEmitter.prototype);
@@ -13,6 +15,8 @@ Connector.prototype = Object.create(EventEmitter.prototype);
 Connector.prototype.listenAsWorker = function() {
     // Bind socket port
     // broadcasts to web(s)
+
+    if(this.binded) return;
 
     var server = http.createServer();
     server.listen(Config.workerPort);
@@ -23,10 +27,14 @@ Connector.prototype.listenAsWorker = function() {
         io.emit('event', data);
     });
 };
+
 Connector.prototype.listenAsWeb = function() {
-    var self = this;
     // Connect to worker socket
     // On server socket, emit
+
+    if(this.binded) return;
+
+    var self = this;
     var serverSocket = socketio(Config.workerUrl + ':' + Config.workerPort);
 
     serverSocket.on('event', function(data) {
