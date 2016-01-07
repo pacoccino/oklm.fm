@@ -31,9 +31,14 @@ var songState = {
   artist: null,
   title: null
 };
+var songHistory = [];
 
 var broadcast = function(message, data) {
   io.emit(message, data);
+};
+
+var isDifferentSong = function(song1, song2) {
+  return (song1.artist !== song2.artist && song1.title !== song2.title);
 };
 
 var getLive = function() {
@@ -49,10 +54,9 @@ var getLive = function() {
     if (!error && response.statusCode === 200 && body.status === 'success') {
 
       var song = body.data;
-      if(songState.artist !== song.artist && songState.title !== song.title) {
+      if(isDifferentSong(songState, song)) {
         songState = song;
         broadcast('songinfo', songState);
-        //console.log(songState);
         getHistory();
       }
     }
@@ -68,12 +72,46 @@ var getHistory = function() {
     method: "GET",
     json: true
   };
+/*
+  var songs = [
+    {
+      artist: "fok",
+      title: "fedok"
+    },
+    {
+      artist: "fok",
+      title: "fedok"
+    },
+    {
+      artist: "fok",
+      title: "fedok"
+    },
+    {
+      artist: "fok",
+      title: "fedok"
+    },
+    {
+      artist: "fok",
+      title: "fedok"
+    },
+    {
+      artist: "fok",
+      title: "fedok"
+    }
+  ];
+  broadcast('songhistory', songs);
+
+  return;*/
 
   request(requestObject, function(error, response, body) {
     if (!error && response.statusCode === 200 && body.status === 'success') {
 
       var songs = body.data;
-      broadcast('songhistory', songs);
+
+      if(songHistory.length === 0 || isDifferentSong(songs[0], songHistory[0])) {
+        songHistory = songs;
+        broadcast('songhistory', songs);
+      }
     }
     else {
       console.log("error", error);
