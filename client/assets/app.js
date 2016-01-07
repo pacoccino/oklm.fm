@@ -29,7 +29,9 @@
         domElements.pauseBtn && domElements.pauseBtn.show();
         domElements.playBtn && domElements.playBtn.removeClass("pause");
 
+        playing = true;
         memory();
+
         setTimeout(memory, 30 * 60 * 1000);
 
         ga('send', 'event', 'play');
@@ -44,13 +46,14 @@
 
         audioElement.pause();
 
+        playing = false;
+
         ga('send', 'event', 'pause');
     };
 
     var playpause = function () {
 
         playing ? pause() : play();
-        playing = !playing;
     };
 
     var browserIncompatible = function () {
