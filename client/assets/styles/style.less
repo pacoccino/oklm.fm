@@ -119,12 +119,12 @@ a:visited {
 
   .central-panel {
     position: relative;
-    width: 60%;
-    height: 60%;
+    width: 100%;
+    height: 100%;
     max-width: 350px;
     max-height: 350px;
 
-    padding: 30px;
+    padding: 20px;
 
     img {
       display: block;
@@ -135,70 +135,20 @@ a:visited {
       transition:  transform 0.8s;
     }
 
-    .history {
-      position: relative;
-      width: 100%;
-      height: 100%;
-
-      top: -300px;
-
-      transition-timing-function: ease-out;
-
-      color: white;
-
-      transform: rotateY(-90deg);
-      &.show {
-        transform: rotateY(0deg);
-      }
-
-      .reversedalbum {
-        position: absolute;
-        transform: rotateY(180deg);
-        width: 100%;
-        height: 100%;
-
-        img {
-          opacity: 0.2;
-          max-width: 100%;
-          max-height: 100%;
-
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          margin: auto;
-        }
-      }
-      .history-header {
-        position: absolute;
-        width:100%;
-        text-align: center;
-        font-weight: 700;
-      }
-
-      .songs {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 20px;
-        overflow: hidden;
-
-        padding: 20px;
-        /*display: flex;
-        flex-direction: column;
-        justify-content: center;*/
-        text-align: center;
-      }
-    }
-
-    .history-btn {
+    .history-opener {
       position: absolute;
       cursor: pointer;
-      right: 20px;
-      top: 20px;
+      right: -10px;
+      top: 28px;
+
       img{
-        width:18px;
+        width:22px;
+        opacity: 0.4;
+      }
+      &:hover {
+        img{
+          opacity: 1;
+        }
       }
     }
     .album-cover {
@@ -333,6 +283,83 @@ a:visited {
     }
     img {
       width: 80px;
+    }
+  }
+
+  .history {
+    //display: none;
+    position: absolute;
+    z-index: 10;
+
+    top: 30%;
+    height: 350px;
+    max-height: 65%;
+
+    left: calc(~"50% - 200'px");
+    width: 90%;
+    max-width: 400px;
+
+    background-color: rgba(0,0,0,0.95);
+    border: 1px solid #353535;
+
+    color: white;
+
+    .close-btn {
+      position: absolute;
+      cursor: pointer;
+      right: 10px;
+      top: 10px;
+      img{
+        width:14px;
+      }
+    }
+
+    .history-header {
+      height: 40px;
+      width:100%;
+      text-align: center;
+      font-weight: 700;
+      text-transform: uppercase;
+
+      border-bottom: 1px solid #353535;
+      padding: 10px 0;
+    }
+
+    .songs {
+      height: calc(~"100% - 50px");
+      width: 100%;
+      top: 20px;
+      overflow: hidden;
+
+      padding: 10px;
+      text-align: center;
+
+      .song {
+        margin-bottom: 5px;
+        .artist {
+          font-weight: 700;
+        }
+        .title {
+          font-weight: 300;
+        }
+        .link {
+          display: inline;
+          cursor: pointer;
+          width: 20px;
+          .hover-act {
+            visibility: hidden;
+            opacity: 0.2;
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+        &:hover {
+          .hover-act {
+            visibility: visible;
+          }
+        }
+      }
     }
   }
 }
