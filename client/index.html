@@ -23,7 +23,7 @@
 <body>
 <div class="main">
     <div class="album-bg">
-        <img src="assets/images/pirates.jpg" id="cover-bg">
+        <img src="assets/images/pirates.jpg" ng-src="song.coverUrl" id="cover-bg">
     </div>
 
     <div class="oklm">
@@ -33,27 +33,27 @@
                 <span class="logotxt">OKLM</span><span class="logofm">.fm</span>
             </div>
         </div>
-        <div class="slogan">Radio pirate</div>
+        <div class="slogan" ng-bind="motto">Radio pirate</div>
     </div>
 
     <div class="central-panel">
 
         <div class="album-cover">
-            <img src="assets/images/pirates.jpg" id="cover">
+            <img src="assets/images/pirates.jpg" ng-src="song.coverUrl" id="cover">
             <img src="assets/images/play.png" id="cover-resume">
             <img src="assets/images/pause.png" id="cover-pause">
         </div>
 
-        <div class="history-opener">
+        <div class="history-opener" ng-hide="historyOpened">
             <img src="assets/images/history.png" />
         </div>
 
         <div class="links">
             <div class="link">
-                <a target="_blank" id="deezer-search" title="Chercher sur Deezer"><img src="assets/images/deezer.png"></a>
+                <a target="_blank" id="deezer-search" title="Chercher sur Deezer" ng-href="song.deezerUrl" ng-show="song.deezerUrl"><img src="assets/images/deezer.png"></a>
             </div>
             <div class="link">
-                <a target="_blank" id="itunes-search" title="Acheter sur iTunes"><img src="assets/images/itunes.png"></a>
+                <a target="_blank" id="itunes-search" title="Acheter sur iTunes" ng-href="song.buyUrl" ng-show="song.buyUrl"><img src="assets/images/itunes.png"></a>
             </div>
         </div>
     </div>
@@ -71,50 +71,30 @@
     </div>
 
     <div class="songinfo">
-        <span class="artist" id="SI-artist"></span> - <span class="title" id="SI-title"></span>
+        <span class="artist" ng-bind="song.artist"></span>
+        <span ng-show="song.artist && song.title"> - </span>
+        <span class="title" ng-bind="song.title"></span>
     </div>
 
     <div class="mfdt"><a target="_blank" id="informations" href="backstage.html">Informations</a></div>
 
-    <div class="history-container">
+    <div class="history-container" ng-show="historyOpened">
         <div class="history">
             <div class="history-header">
                 Historique
             </div>
             <div class="songs">
-                <div class="song">
-                    <span class="artist">ifuehifuhezf</span>
+                <div class="song" ng-repeat="song in history">
+                    <span class="artist" ng-bind="song.artist"></span>
                     -
-                    <span class="title">fezifjezifj</span>
+                    <span class="title" ng-bind="song.title">fezifjezifj</span>
                     <div class="link">
                         <span class="hover-act">O.</span>
                     </div>
                 </div>
-                <div class="song"><span class="artist">hezf</span> - <span class="title">ezifj</span></div>
-                <div class="song"><span class="artist">ifue</span> - <span class="title">fezifj</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
-                <div class="song"><span class="artist">izf</span> - <span class="title">ffaaa</span></div>
             </div>
             <div class="close-btn">
-                <img src="assets/images/close.png" id="history-close-btn" />
+                <img src="assets/images/close.png" id="history-close-btn" ng-click="closeHistory()"/>
             </div>
         </div>
     </div>
