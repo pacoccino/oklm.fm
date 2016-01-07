@@ -26,6 +26,8 @@ Connector.prototype.listenAsWorker = function() {
     this.on('event', function(data) {
         io.emit('event', data);
     });
+
+    this.binded = true;
 };
 
 Connector.prototype.listenAsWeb = function() {
@@ -40,6 +42,8 @@ Connector.prototype.listenAsWeb = function() {
     serverSocket.on('event', function(data) {
         self.emit('event', data);
     });
+
+    this.binded = true;
 };
 
 module.exports = function() {
