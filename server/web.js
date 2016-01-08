@@ -2,11 +2,10 @@
 
 var connector = require('./modules/socketconnector')();
 var WebServer = require('./modules/web');
-var Logger = require('./logger');
+var Logger = require('./modules/logger');
 
 connector.listenAsWeb(function(error) {
     if(!error) {
-        Logger.info("Web sever successfuly connected to worker");
         var webServer = new WebServer(connector);
     }
     else {

@@ -1,5 +1,4 @@
 {
-    "port": 8888,
     "radioId": 3093,
     "messages": {
         "songInfo": "songinfo",
@@ -9,5 +8,7 @@
     "crawlInterval": 8000,
     "publicFolder": "app",
     "workerUrl": "localhost",
-    "workerPort": 8050
+    "workerPort": 8050,
+    "webHost": "localhost",
+    "webPort": 8080
 }

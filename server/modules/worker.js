@@ -31,6 +31,8 @@ class CrawlWorker {
 
     linkConnector(connector) {
         this.connector = connector;
+
+        this.connector.on('newsocket', this.broadcastAllinfos.bind(this));
     }
 
     notifyWebServers(event) {
@@ -58,6 +60,14 @@ class CrawlWorker {
         return (song1.artist !== song2.artist || song1.title !== song2.title);
     }
 
+    broadcastAllinfos() {
+        var eventSong = CrawlWorker.newSongEvent(this.songState);
+        var eventHistory = CrawlWorker.historyEvent(this.songHistory);
+
+        this.notifyWebServers(eventSong);
+        this.notifyWebServers(eventHistory);
+    }
+
     getLive() {
         var self = this;
         var url = Config.apiUrl + "track/live";
@@ -72,7 +82,9 @@ class CrawlWorker {
             if (!error && response.statusCode === 200 && body.status === 'success') {
 
                 var song = body.data;
-                if(Worker.isDifferentSong(self.songState, song)) {
+                if(CrawlWorker.isDifferentSong(self.songState, song)) {
+
+                    Logger.silly("New song info");
                     self.songState = song;
 
                     var event = CrawlWorker.newSongEvent(song);
@@ -101,7 +113,9 @@ class CrawlWorker {
             if (!error && response.statusCode === 200 && body.status === 'success') {
 
                 var songs = body.data;
-                if(self.songHistory.length === 0 || Worker.isDifferentSong(songs[0], self.songHistory[0])) {
+                if(self.songHistory.length === 0 || CrawlWorker.isDifferentSong(songs[0], self.songHistory[0])) {
+                    Logger.silly("New song history");
+
                     self.songHistory = songs;
 
                     var event = CrawlWorker.historyEvent(songs);
