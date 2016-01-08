@@ -34,7 +34,7 @@
 
         setTimeout(memory, 30 * 60 * 1000);
 
-        ga('send', 'event', 'play');
+        ga('send', 'event', 'mediactrl', 'play');
     };
 
     var pause = function () {
@@ -48,7 +48,7 @@
 
         playing = false;
 
-        ga('send', 'event', 'pause');
+        ga('send', 'event', 'mediactrl', 'pause');
     };
 
     var playpause = function () {
@@ -141,7 +141,7 @@
             ga('send', 'event', 'mobileapp', 'apple store');
         });
         $('#informations').click(function() {
-            ga('send', 'event', 'informations');
+            ga('send', 'event', 'miscpages', 'informations');
         });
         $('#deezer-search').click(function() {
             ga('send', 'event', 'searchsong', 'deezer');
