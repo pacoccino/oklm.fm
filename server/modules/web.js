@@ -34,7 +34,7 @@ class WebServer {
         self.io = socketio(server);
 
         self.io.on('connection', function (socket) {
-            Logger.silly("New socket");
+            Logger.silly("New client");
 
             if(self.songInfo) {
                 socket.emit(Config.messages.songInfo, self.songInfo);

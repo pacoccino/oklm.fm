@@ -56,16 +56,23 @@ Connector.prototype.listenAsWeb = function(callback) {
     if(this.binded) return;
 
     var self = this;
-    var serverSocket = socketioClient('http://' + Config.workerUrl + ':' + Config.workerPort);
 
-    var connectionError = {
-        nbAttempts: 0,
-        socketErr: null
+    var connectionConfig = {
+        reconnection: true,
+        reconnectionAttempts: 5,
+        timeout: 10000
     };
 
-    var maxAttempts = 5;
-    var onConnected = function() {
+    var serverSocket = socketioClient('http://' + Config.workerUrl + ':' + Config.workerPort, connectionConfig);
+
+    serverSocket.on('connect', function() {
         Logger.info("Successfuly connected to worker");
+
+        serverSocket.on('event', function(data) {
+            self.emit('event', data);
+        });
+
+        self.binded = true;
 
         serverSocket.on('disconnect', function() {
             Logger.warning("Worker disconnected, shutting down ...");
@@ -74,34 +81,18 @@ Connector.prototype.listenAsWeb = function(callback) {
         });
 
         callback(null);
-    };
+    });
 
-    var tryToConnect = function(cb) {
+    serverSocket.on('reconnect_attempt', function() {
+        Logger.warning("Connection lost, trying to reconnect...");
+    });
+    serverSocket.on('reconnect', function() {
+        Logger.info("Reconnected to worker");
+    });
 
-        serverSocket.on('connect', function(error) {
-            if(!error) {
-                serverSocket.on('event', function(data) {
-                    self.emit('event', data);
-                });
-
-                self.binded = true;
-                onConnected();
-            }
-            else {
-                if(connectionError.nbAttempts < maxAttempts) {
-                    Logger.warning("Failed to connect to worker server, retrying...");
-                    connectionError.nbAttempts++;
-                    tryToConnect();
-                }
-                else {
-                    connectionError.socketErr = error;
-                    cb(connectionError);
-                }
-            }
-        });
-    };
-
-    tryToConnect();
+    serverSocket.on('connect_error', function(error) {
+        callback(error);
+    });
 };
 
 module.exports = function() {
