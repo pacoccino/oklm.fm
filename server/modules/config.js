@@ -8,7 +8,7 @@ var Config = {
     publicFolder: process.env.PUBLIC_FOLDER || defaultConfig.publicFolder,
     workerUrl: process.env.WORKER_URL || defaultConfig.workerUrl,
     workerPort: process.env.WORKER_PORT || defaultConfig.workerPort,
-    webUrl: process.env.WEB_URL || defaultConfig.webUrl,
+    webHost: process.env.WEB_HOST || defaultConfig.webHost,
     webPort: process.env.WEB_PORT || defaultConfig.webPort
 };
 
