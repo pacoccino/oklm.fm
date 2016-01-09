@@ -10,5 +10,5 @@
     "workerUrl": "localhost",
     "workerPort": 8050,
     "webHost": "localhost",
-    "webPort": 8080
+    "webPort": 4000
 }

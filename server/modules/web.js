@@ -1,5 +1,8 @@
 "use strict";
 
+var http = require('http');
+http.globalAgent.maxSockets = Infinity;
+
 var express = require('express');
 var socketio = require('socket.io');
 
@@ -26,15 +29,21 @@ class WebServer {
         var app = express();
 
         app.set('port', Config.webPort);
-
+        
+        app.use(function(req, res, next){
+            Logger.info(`New connection on process web ${process.pid}`);
+            next();
+        });
+        
         app.use(express.static(Config.publicFolder));
 
-        var server = app.listen(app.get('port'));
+        app.server = http.createServer(app);
+        app.server.listen(app.get('port'));
 
-        self.io = socketio(server);
+        self.io = socketio(app.server);
 
         self.io.on('connection', function (socket) {
-            Logger.silly("New client");
+            Logger.info(`New client ws on process web ${process.pid}`);
 
             if(self.songInfo) {
                 socket.emit(Config.messages.songInfo, self.songInfo);
