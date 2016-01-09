@@ -10,11 +10,7 @@ var app = express();
 var PORT = process.env.PORT || 8888;
 
 app.use(cookieParser());
-/*app.use(expressSession({
- secret:'somesecrettokenhere',
- resave: false,
- saveUninitialized: false
- }));*/
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -90,3 +86,5 @@ io.on('connection', function (socket) {
 });
 
 setInterval(updateApi, 8000);
+
+console.log("Server started");
