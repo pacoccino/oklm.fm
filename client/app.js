@@ -1,3 +1,5 @@
+var angularApp = angular.module('oklm.fm', []);
+
 angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval) {
 
     var audioElement = null;
@@ -21,9 +23,13 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
     $scope.historyOpened = false;
 
     $scope.openHistory = function() {
+        ga('send', 'event', 'history', 'open');
+
         $scope.historyOpened = true;
     };
     $scope.closeHistory = function() {
+        ga('send', 'event', 'history', 'close');
+
         $scope.historyOpened = false;
     };
 
@@ -160,5 +166,5 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         $scope.play();
     };
 
-    $(document).ready($scope.$apply(init));
+    init();
 }]);

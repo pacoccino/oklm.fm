@@ -65,11 +65,11 @@ module.exports = function(grunt) {
                         },
                         {
                             expand: true,
-                            cwd: appDir + "assets",
+                            cwd: appDir,
                             src: [
                                 "app.js"
                             ],
-                            dest: buildDir + "assets"
+                            dest: buildDir
                         },
                         {
                             expand: true,

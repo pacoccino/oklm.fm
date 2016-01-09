@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" ng-app="oklm.fm">
 <head>
     <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -17,13 +17,14 @@
     <meta name="theme-color" content="#ffffff">
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="assets/app.js"></script>
+    <script src="app.js"></script>
 </head>
 <body>
-<div class="main">
+<div class="main" ng-controller="Ctrl">
     <div class="album-bg">
-        <img src="assets/images/pirates.jpg" ng-src="song.coverUrl" id="cover-bg">
+        <img src="assets/images/pirates.jpg" ng-src="{{song.coverUrl}}" id="cover-bg">
     </div>
 
     <div class="oklm">
@@ -39,7 +40,7 @@
     <div class="central-panel">
 
         <div class="album-cover">
-            <img src="assets/images/pirates.jpg" ng-src="song.coverUrl" id="cover" ng-class="{!playing: 'fade'}">
+            <img src="assets/images/pirates.jpg" ng-src="{{song.coverUrl}}" id="cover" ng-class="{fade: playing}">
             <img src="assets/images/play.png" id="cover-resume" ng-click="play()" ng-hide="playing">
             <img src="assets/images/pause.png" id="cover-pause" ng-click="pause()" ng-show="playing">
         </div>
