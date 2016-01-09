@@ -129,7 +129,7 @@
     var addEvents = function () {
         $(document).keypress(function (e) {
             if (e.charCode === 32) {
-                ga('send', 'event', 'spacebar');
+                ga('send', 'event', 'keyboard', 'spacebar');
                 playpause();
             }
         });
