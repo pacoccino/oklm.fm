@@ -1,12 +1,26 @@
-var Logger = {
-    error: console.error,
-    warning: console.log,
-    info: console.log,
-    silly: console.error,
-    verbose: console.log,
-    log: function (type, msg) {
-        console.log(msg);
-    }
-};
+var winston = require('winston');
+
+var Logger = new (winston.Logger)({
+    transports: [
+        new (winston.transports.Console)({
+            level: 'info'
+        }),
+        new (winston.transports.File)({
+            name: 'info-file',
+            filename: 'logs/log.log',
+            level: 'info'
+        }),
+        new (winston.transports.File)({
+            name: 'error-file',
+            filename: 'logs/error.log',
+            level: 'error'
+        }),
+        new (winston.transports.File)({
+            name: 'silly-file',
+            filename: 'logs/silly'+process.pid+'.log',
+            level: 'silly'
+        })
+    ]
+});
 
 module.exports = Logger;
