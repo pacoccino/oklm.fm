@@ -1,2 +1,2 @@
 cd ..
-node server/server.js
+forever start server/server.js
