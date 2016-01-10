@@ -31,7 +31,7 @@ $ npm run deploy-nginx-config
 
 Resolve oklm.fm to localhost:
 
-Edite: ```/etc/hosts'```, add:
+Add in end to ```/etc/hosts```:
  
 ```sh
 127.0.0.1       api.oklm.fm
@@ -46,14 +46,15 @@ Configuration apply with this flow:
 
 - Environnement variable: LOG_DIR, CRAWLER_PORT, PUBLIC_FOLDER, STATIC_PORT
 - If environnement var not define, app use configuration files: ```config/config.json```
-
-Env conf and file conf are merged in app used file: ```server/config/config.js```
+- Env conf and file conf are merged in app used file: ```server/config/config.js```
 
 
 Running
 -------------
 
-###Crawler
+
+I. Crawler
+
 Polling player api to get music metadata and broadcast on (internal) websocket:
 
 - Entry point: ```server/services/crawler.js```
@@ -62,10 +63,11 @@ Polling player api to get music metadata and broadcast on (internal) websocket:
 $ npm run service-crawler:{{start/stop}}
 ```
 
-*In distributed mode, only one crawler can (and need) to be run (see ````scripts/startCrawler.js```). 
+*In distributed mode, only one crawler can (and need) to be run (see ```scripts/startCrawler.js```). 
 
 
-###Api
+II. Api
+
 Listen crawler and expose public websocket api ( And in turfu ya forcément du REST ou bien un autre service juste rest)
 
 - Entry point: ```server/services/api.js```
@@ -76,10 +78,11 @@ Listen crawler and expose public websocket api ( And in turfu ya forcément du R
 $ npm run service-api:{{start/stop}}
 ```
 
-*By default 2 worker in distributed mode(see ```config/nginx/config.d/api.oklm.fm``` and ```scripts/startApi). 
+*By default 2 worker in distributed mode(see ```config/nginx/config.d/api.oklm.fm``` and ```scripts/startApi```). 
 
 
-###Static files:
+III. Static files:
+
 Public http static file server:
 
 - Entry point: ```server/services/static.js```
@@ -90,7 +93,7 @@ Public http static file server:
 $ npm run service-static:{{start/stop}}
 ```
 
-*By default 2 worker in distributed mode(see ```config/nginx/config.d/static.oklm.fm``` and ```scripts/startStatic). 
+*By default 2 worker in distributed mode(see ```config/nginx/config.d/static.oklm.fm``` and ```scripts/startStatic```). 
 
  
 ###For start/stop all Services:
@@ -104,12 +107,10 @@ $ npm run services-{{start/stop}}
 LOG
 -------------
 
-###When you run app distributed:
+I. When you run app distributed:
 
 
 ```
-
-
                                                                                       |-----/forever.log  -> Main forever process all output
                                                                                       |
                                                                                       |-----/err.log -> Worker process stderr
@@ -137,22 +138,22 @@ config/log/{{Service  name}}/{{Timestamp process}}|
                                                                                       |-----/log-{{pid of worker}}.log -> App log
                                                                                       |
                                                                                       |-----/silly-{{pid of worker}}.log -> App silly log
-
-
 ```                                                                                    
 
-###When you run directly entry point:
+
+II. When you run directly entry point:
 
 
-
+```  
            |-----/err-{{pid of process}}.log -> App error
            |
 config/Dev/|-----/log-{{pid of process}}.log -> App log
            |
            |-----/silly-{{pid of process}}.log -> App silly log
+```  
  
  
-###For clean all logs:
+III. For clean all logs:
 
 ```sh
 $ npm run clean:logs
