@@ -2,7 +2,7 @@
 
 //var request = require('./fakerequest');
 var request = require('request');
-var Config = require('./config.js');
+var Config = require('./config');
 var Logger = require('./logger');
 
 class CrawlWorker {
@@ -19,12 +19,12 @@ class CrawlWorker {
 
         this.initCrawler();
 
-        Logger.info("Worker ready");
+        Logger.info("Crawler ready");
     }
 
     initCrawler() {
         var updater = this.updateApi.bind(this);
-        setInterval(updater, Config.crawlInterval);
+        setInterval(updater, Config.crawler.interval);
         this.getLive();
         this.getHistory();
     };
@@ -35,7 +35,7 @@ class CrawlWorker {
         this.connector.on('newsocket', this.broadcastAllinfos.bind(this));
     }
 
-    notifyWebServers(event) {
+    notifyApiServers(event) {
         this.connector.emit('event', event);
     };
 
@@ -64,13 +64,13 @@ class CrawlWorker {
         var eventSong = CrawlWorker.newSongEvent(this.songState);
         var eventHistory = CrawlWorker.historyEvent(this.songHistory);
 
-        this.notifyWebServers(eventSong);
-        this.notifyWebServers(eventHistory);
+        this.notifyApiServers(eventSong);
+        this.notifyApiServers(eventHistory);
     }
 
     getLive() {
         var self = this;
-        var url = Config.apiUrl + "track/live";
+        var url = Config.apiRadioUrl + "track/live";
 
         var requestObject  = {
             url: url,
@@ -88,7 +88,7 @@ class CrawlWorker {
                     self.songState = song;
 
                     var event = CrawlWorker.newSongEvent(song);
-                    self.notifyWebServers(event);
+                    self.notifyApiServers(event);
                     self.getHistory();
                 }
             }
@@ -101,7 +101,7 @@ class CrawlWorker {
     getHistory() {
         var self = this;
         var limit = 20;
-        var url = Config.apiUrl + "track/ckoi?limit="+limit;
+        var url = Config.apiRadioUrl + "track/ckoi?limit="+limit;
 
         var requestObject  = {
             url: url,
@@ -119,7 +119,7 @@ class CrawlWorker {
                     self.songHistory = songs;
 
                     var event = CrawlWorker.historyEvent(songs);
-                    self.notifyWebServers(event);
+                    self.notifyApiServers(event);
                 }
             }
             else {

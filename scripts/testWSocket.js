@@ -11,8 +11,8 @@ var connectionConfig = {
   timeout: 10000
 };
 
-const address = 'http://oklm.fm';
-const nbRequest = 3500;
+const address = 'http://api.oklm.fm';
+const nbRequest = 150;
 const globalTime = Date.now();
 
 let errReq = 0;

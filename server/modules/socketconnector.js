@@ -14,7 +14,7 @@ var Connector = function() {
 
 Connector.prototype = Object.create(EventEmitter.prototype);
 
-Connector.prototype.listenAsWorker = function() {
+Connector.prototype.listenAsCrawler = function() {
     // Bind socket port
     // broadcasts to web(s)
 
@@ -27,8 +27,8 @@ Connector.prototype.listenAsWorker = function() {
         res.end("Worker empty http server");
     };
     var server = http.createServer(sillyMiddleware);
-    server.listen(Config.workerPort, () => {
-        Logger.info(`Server listen on ${Config.workerPort}`);
+    server.listen(Config.crawler.port, () => {
+        Logger.info(`Server listen on ${Config.crawler.port}`);
     });
 
     var io = socketioServer(server);
@@ -51,7 +51,7 @@ Connector.prototype.listenAsWorker = function() {
     this.binded = true;
 };
 
-Connector.prototype.listenAsWeb = function(callback) {
+Connector.prototype.listenAsApi = function(callback) {
     // Connect to worker socket
     // On server socket, emit
 
@@ -65,10 +65,10 @@ Connector.prototype.listenAsWeb = function(callback) {
         timeout: 10000
     };
 
-    var serverSocket = socketioClient('http://' + Config.workerUrl + ':' + Config.workerPort, connectionConfig);
+    var serverSocket = socketioClient('http://' + Config.crawler.address + ':' + Config.crawler.port, connectionConfig);
 
     serverSocket.on('connect', function() {
-        Logger.info("Successfuly connected to worker");
+        Logger.info("Successfuly connected to crawler");
 
         serverSocket.on('event', function(data) {
             self.emit('event', data);
@@ -77,9 +77,9 @@ Connector.prototype.listenAsWeb = function(callback) {
         self.binded = true;
 
         serverSocket.on('disconnect', function() {
-            Logger.warning("Worker disconnected, shutting down ...");
+            Logger.warning("Crawler disconnected, shutting down ...");
 
-            process.exit(0);
+            process.exit(0);//TODO
         });
 
         callback(null);

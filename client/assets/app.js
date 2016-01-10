@@ -148,7 +148,7 @@
 
         audiolink();
 
-        var socket = io();
+        var socket = io('http://api.oklm.fm');
         socket.on('songinfo', function (data) {
             updateSonginfo(data);
         });

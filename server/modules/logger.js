@@ -1,5 +1,5 @@
-var winston = require('winston');
-const Config = require('./config.js');
+const winston = require('winston');
+const Config = require('./config');
 
 var Logger = new (winston.Logger)({
     transports: [
@@ -8,17 +8,17 @@ var Logger = new (winston.Logger)({
         }),
         new (winston.transports.File)({
             name: 'info-file',
-            filename: `${Config.logDir}/log-${process.pid}.log`,
+            filename: `${Config.log.path}/log-${process.pid}.log`,
             level: 'info'
         }),
         new (winston.transports.File)({
             name: 'error-file',
-            filename: `${Config.logDir}/error-${process.pid}.log`,
+            filename: `${Config.log.path}/error-${process.pid}.log`,
             level: 'error'
         }),
         new (winston.transports.File)({
             name: 'silly-file',
-            filename: `${Config.logDir}/silly-${process.pid}.log`,
+            filename: `${Config.log.path}/silly-${process.pid}.log`,
             level: 'silly'
         })
     ]

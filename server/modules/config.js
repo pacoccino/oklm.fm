@@ -1,16 +1,17 @@
-var defaultConfig = require('../config.json');
+'use strict';
 
-var Config = {
-    radioId: defaultConfig.radioId,
-    apiUrl: defaultConfig.apiUrl,
-    messages: defaultConfig.messages,
-    crawlInterval:defaultConfig.crawlInterval,
-    publicFolder: process.env.PUBLIC_FOLDER || defaultConfig.publicFolder,
-    workerUrl: process.env.WORKER_URL || defaultConfig.workerUrl,
-    workerPort: process.env.WORKER_PORT || defaultConfig.workerPort,
-    webHost: process.env.WEB_HOST || defaultConfig.webHost,
-    webPort: process.env.WEB_PORT || defaultConfig.webPort,
-    logDir: process.env.LOG_DIR || defaultConfig.logDir
-};
+const defaultConfig = require('../../config/config.json');
 
-module.exports = Config;
+module.exports = Object.assign({}, defaultConfig, {
+  'log': {
+    'path': process.env.LOG_DIR || defaultConfig.log.path
+  },
+  'api': {
+    'port': process.env.API_PORT || defaultConfig.api.port
+  },
+  'static': {
+    'port': process.env.STATIC_PORT || defaultConfig.static.port,
+    'publicFolder': process.env.PUBLIC_FOLDER || defaultConfig.static.publicFolder
+  }
+});
+  

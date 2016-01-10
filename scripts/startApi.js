@@ -4,7 +4,7 @@ const mkdirp = require('mkdirp');
 const path = require('path');
 const forever = require('forever');
 
-const websWorkers = [
+const apiWorkers = [
   {
     'port': 5000
   },
@@ -14,13 +14,13 @@ const websWorkers = [
 ];
 
 
-const webEntryPoint = path.resolve( __dirname, '../server/web.js');
+const webEntryPoint = path.resolve( __dirname, '../server/services/api.js');
 
-websWorkers.forEach( (webWorker) => {
+apiWorkers.forEach( (apiWorker) => {
   
   const nowString = new Date().toISOString().slice(0, 19);
   const foreverUUID = Math.floor( ( 1 + Math.random() ) * 0x10000 ).toString( 16 );
-  const logDir = path.resolve( __dirname, `../log/Webs/${nowString}/${foreverUUID}`);
+  const logDir = path.resolve( __dirname, `../log/Api/${nowString}/${foreverUUID}`);
 
   mkdirp(logDir, (err) => {
     
@@ -33,16 +33,16 @@ websWorkers.forEach( (webWorker) => {
       'outFile': `${logDir}/out.log`,       // Path to log output from child stdout
       'errFile': `${logDir}/err.log`,       // Path to log output from child stderr
       'minUptime': 1000,                    // Minimum time a child process has to be up. Forever will 'exit' otherwise.
-      'spinSleepTime': 1000,                // Interval between restarts if a child is spinning (i.e. alive < minUptime).
+      'spinSleepTime': 2000,                // Interval between restarts if a child is spinning (i.e. alive < minUptime).
       'env': {                              // Environement variable send to child process
         'NODE_ENV': 'production',
         'LOG_DIR': logDir,
-        'WEB_PORT': webWorker.port
+        'API_PORT': apiWorker.port
       },
       'uid': foreverUUID                    // Forever UUID
     });
     
-    return console.info(`Web daemon running foreverUUID: ${foreverUUID}`);
+    return console.info(`Api daemon running foreverUUID: ${foreverUUID}`);
 
   });
 

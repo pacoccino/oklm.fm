@@ -6,10 +6,10 @@ http.globalAgent.maxSockets = Infinity;
 var express = require('express');
 var socketio = require('socket.io');
 
-var Config = require('./config.js');
+const Config = require('./config');
 var Logger = require('./logger');
 
-class WebServer {
+class Api {
 
     constructor(connector) {
         if(!connector) return;
@@ -17,26 +17,24 @@ class WebServer {
         this.songInfo = null;
         this.songHistory = null;
 
-        this.initializeWebServer();
+        this.initializeApiServer();
         this.linkConnector(connector);
 
-        Logger.info("Web ready");
+        Logger.info("Api ready");
     }
 
-    initializeWebServer() {
+    initializeApiServer() {
 
         var self = this;
         var app = express();
 
-        app.set('port', Config.webPort);
+        app.set('port', Config.api.port);
         
         app.use(function(req, res, next){
-            Logger.info(`New connection on process web ${process.pid}`);
+            Logger.info(`New connection on process api ${process.pid}`);
             next();
         });
         
-        app.use(express.static(Config.publicFolder));
-
         app.server = http.createServer(app);
         app.server.listen(app.get('port'), () => {
             Logger.info(`Server listen on ${app.get('port')}`);
@@ -94,4 +92,4 @@ class WebServer {
     };
 }
 
-module.exports = WebServer;
+module.exports = Api;

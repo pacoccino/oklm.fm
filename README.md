@@ -8,33 +8,152 @@ Web app pour écouter la radio pirate OKLM
 
 Requirements
 -------------
-* grunt
-* node v5.x.x+
+
+* node v4.2.2+
+
 
 Install
 -------------
 
 ```sh
 $ npm install
-$ grunt build
+```
+
+
+Nginx
+-------------
+
+Deploy local nginx configuration (site.conf, upstream.conf, nginx.conf):
+
+```sh
+$ npm run deploy-nginx-config
+```
+
+Resolve oklm.fm to localhost:
+
+Edite: ```/etc/hosts'```, add:
+ 
+```sh
+127.0.0.1       api.oklm.fm
+127.0.0.1       www.oklm.fm
 ```
 
 
 Config
 -------------
 
-Configuration (ports, etc) takes place in server/config.json
+Configuration apply with this flow:
+
+- Environnement variable: LOG_DIR, CRAWLER_PORT, PUBLIC_FOLDER, STATIC_PORT
+- If environnement var not define, app use configuration files: ```config/config.json```
+
+Env conf and file conf are merged in app used file: ```server/config/config.js```
+
 
 Running
 -------------
-For all-in-one server, run:
+
+###Crawler
+Polling player api to get music metadata and broadcast on (internal) websocket:
+
+- Entry point: ```server/services/crawler.js```
+
 ```sh
-$ node server/server.js
+$ npm run service-crawler:{{start/stop}}
 ```
 
-For separated worker and web servers, run :
+*In distributed mode, only one crawler can (and need) to be run (see ````scripts/startCrawler.js```). 
+
+
+###Api
+Listen crawler and expose public websocket api ( And in turfu ya forcément du REST ou bien un autre service juste rest)
+
+- Entry point: ```server/services/api.js```
+
+- Launch in distributed(Load balancing):
+
 ```sh
-$ node server/worker.js
-$ node server/web.js
+$ npm run service-api:{{start/stop}}
 ```
-In distributed mode, only one worker can (and need) to be run. For launching multiple web server you must specify the listening port in environment variable WEB_PORT
+
+*By default 2 worker in distributed mode(see ```config/nginx/config.d/api.oklm.fm``` and ```scripts/startApi). 
+
+
+###Static files:
+Public http static file server:
+
+- Entry point: ```server/services/static.js```
+
+- Launch in distributed(Load balancing):
+
+```sh
+$ npm run service-static:{{start/stop}}
+```
+
+*By default 2 worker in distributed mode(see ```config/nginx/config.d/static.oklm.fm``` and ```scripts/startStatic). 
+
+ 
+###For start/stop all Services:
+
+```sh
+$ npm run services-{{start/stop}}
+```
+
+
+ 
+LOG
+-------------
+
+###When you run app distributed:
+
+
+```
+
+
+                                                                                      |-----/forever.log  -> Main forever process all output
+                                                                                      |
+                                                                                      |-----/err.log -> Worker process stderr
+                                                                                      |
+                                                  |--{{Forever uuid worker}}----------|-----/out.log -> Worker porcess stdout
+                                                  |                                   |
+                                                  |                                   |-----/err-{{pid of worker}}.log -> App error
+                                                  |                                   |
+                                                  |                                   |-----/log-{{pid of worker}}.log -> App log
+                                                  |                                   |
+                                                  |                                   |-----/silly-{{pid of worker}}.log -> App silly log
+                                                  |
+                                                  |
+config/log/{{Service  name}}/{{Timestamp process}}|
+                                                  |                                
+                                                  |                                       
+                                                  |                                   |-----/forever.log  -> Main forever process all output
+                                                  |                                   |
+                                                  |                                   |-----/err.log -> Worker process stderr
+                                                  |                                   |
+                                                  |--{{Forever uuid worker}}----------|-----/out.log -> Worker porcess stdout
+                                                                                      |
+                                                                                      |-----/err-{{pid of worker}}.log -> App error
+                                                                                      |
+                                                                                      |-----/log-{{pid of worker}}.log -> App log
+                                                                                      |
+                                                                                      |-----/silly-{{pid of worker}}.log -> App silly log
+
+
+```                                                                                    
+
+###When you run directly entry point:
+
+
+
+           |-----/err-{{pid of process}}.log -> App error
+           |
+config/Dev/|-----/log-{{pid of process}}.log -> App log
+           |
+           |-----/silly-{{pid of process}}.log -> App silly log
+ 
+ 
+###For clean all logs:
+
+```sh
+$ npm run clean:logs
+```
