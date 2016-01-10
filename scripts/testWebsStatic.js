@@ -4,7 +4,7 @@ const http = require('http');
 http.globalAgent.maxSockets = Infinity;
 const request = require('request');
 
-const nbRequest = 2500;
+const nbRequest = 2900;
 const nginxBadGatewayPageLength = 568;
 const indexHtmlPageLength = 1377;
 const globalTime = Date.now();
@@ -29,14 +29,16 @@ function logEnd() {
   
   const medianReqTimes = orderReqTimes[Math.round((orderReqTimes.length - 1) / 2)];
   
-  console.log(`
-    Nb Req: ${nbRequest},
-    TotalTime: ${totalReqTime}ms,
-    AverageReqTime: ${avgReqTime}ms,
-    MedianTime: ${medianReqTimes}ms,
-    MaxTime: ${orderReqTimes[orderReqTimes.length -1]},
-    MinTime: ${orderReqTimes[0]}
-  `);
+  setTimeout( () => {
+    console.log(`
+      Nb Req: ${nbRequest},
+      TotalTime: ${totalReqTime}ms,
+      AverageReqTime: ${avgReqTime}ms,
+      MedianTime: ${medianReqTimes}ms,
+      MaxTime: ${orderReqTimes[orderReqTimes.length -1]},
+      MinTime: ${orderReqTimes[0]}
+    `)
+  }, 200);
   
   if (errReq !== 0) {
     
