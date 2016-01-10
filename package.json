@@ -12,6 +12,8 @@
     "stop-worker": "forever stop server/worker.js",
     "start-webs": "node scripts/startfrontEndWorkers.js",
     "stop-webs": "forever stop server/web.js",
+    "start-all": "npm run start-worker && npm run start-webs",
+    "stop-all": "npm run stop-webs && npm run stop-worker",
     "clean-logs": "rm -Rf log/Crawler/** && rm -Rf log/Webs/**",
     "deploy-nginx-config": "npm run _nginx-clean-config && npm run _nginx-copy-config && npm run _nginx-symbolic-link && npm run _nginx-restart",
     "_nginx-copy-config": "sudo cp config/etc/nginx/nginx.conf /etc/nginx/nginx.conf && sudo cp -R  config/etc/nginx/conf.d/ /etc/nginx && sudo cp -R  config/etc/nginx/sites-available/ /etc/nginx",

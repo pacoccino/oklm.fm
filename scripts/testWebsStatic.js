@@ -4,7 +4,8 @@ const http = require('http');
 http.globalAgent.maxSockets = Infinity;
 const request = require('request');
 
-const nbRequest = 2900;
+const address = 'http://oklm.fm';
+const nbRequest = 2500;
 const nginxBadGatewayPageLength = 568;
 const indexHtmlPageLength = 1377;
 const globalTime = Date.now();
@@ -83,7 +84,7 @@ function run() {
     let timeStartReq = Date.now();
 
     request.get({
-      'url': 'http://www.oklm.fm',
+      'url': address,
       'headers': {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Encoding': 'gzip, deflate, sdch',
