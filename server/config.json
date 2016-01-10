@@ -10,5 +10,6 @@
     "workerUrl": "localhost",
     "workerPort": 8050,
     "webHost": "localhost",
-    "webPort": 4000
+    "webPort": 5000,
+    "logDir": "log/Dev"
 }

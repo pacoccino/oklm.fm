@@ -9,7 +9,8 @@ var Config = {
     workerUrl: process.env.WORKER_URL || defaultConfig.workerUrl,
     workerPort: process.env.WORKER_PORT || defaultConfig.workerPort,
     webHost: process.env.WEB_HOST || defaultConfig.webHost,
-    webPort: process.env.WEB_PORT || defaultConfig.webPort
+    webPort: process.env.WEB_PORT || defaultConfig.webPort,
+    logDir: process.env.LOG_DIR || defaultConfig.logDir
 };
 
 module.exports = Config;

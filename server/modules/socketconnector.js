@@ -27,7 +27,9 @@ Connector.prototype.listenAsWorker = function() {
         res.end("Worker empty http server");
     };
     var server = http.createServer(sillyMiddleware);
-    server.listen(Config.workerPort);
+    server.listen(Config.workerPort, () => {
+        Logger.info(`Server listen on ${Config.workerPort}`);
+    });
 
     var io = socketioServer(server);
 

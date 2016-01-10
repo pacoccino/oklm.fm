@@ -38,7 +38,9 @@ class WebServer {
         app.use(express.static(Config.publicFolder));
 
         app.server = http.createServer(app);
-        app.server.listen(app.get('port'));
+        app.server.listen(app.get('port'), () => {
+            Logger.info(`Server listen on ${app.get('port')}`);
+        });
 
         self.io = socketio(app.server);
 
