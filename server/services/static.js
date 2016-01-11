@@ -11,7 +11,7 @@ app.set('port', Config.static.port);
 
 app.use( (req, res, next) => {
   
-  Logger.info(`New connection on process api ${process.pid}`);
+  Logger.silly(`New connection on process api ${process.pid}`);
   next();
   
 });

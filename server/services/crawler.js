@@ -5,5 +5,5 @@ var connector = require('./../modules/socketconnector')();
 var Crawler = require('./../modules/crawler');
 
 connector.listenAsCrawler();
-var worker = new Crawler(connector);
+var crawler = new Crawler(connector);
 
