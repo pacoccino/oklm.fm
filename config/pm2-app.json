@@ -1,11 +1,24 @@
 {
   "apps" : [
     {
-      "name"      : "api",
+      "name"      : "api-1",
       "script"    : "./server/services/api.js",
       "env": {
         "NODE_ENV": "production",
         "API_PORT": 5000
+      },
+      "instances"  : 1,
+      "exec_mode"  : "cluster_mode",
+      "error_file" : "./logs/api-err.log",
+      "out_file"   : "./logs/api-out.log",
+      "pid_file"   : "./logs/api.pid"
+    },
+    {
+      "name"      : "api-1",
+      "script"    : "./server/services/api.js",
+      "env": {
+        "NODE_ENV": "production",
+        "API_PORT": 5100
       },
       "instances"  : 1,
       "exec_mode"  : "cluster_mode",
@@ -26,11 +39,25 @@
       "pid_file"   : "./logs/crawler.pid"
     },
     {
-      "name"      : "static",
+      "name"      : "static-1",
       "script"    : "./server/services/static.js",
       "env": {
         "NODE_ENV": "production",
         "STATIC_PORT": 5100,
+        "PUBLIC_FOLDER": "app"
+      },
+      "instances"  : 1,
+      "exec_mode"  : "cluster_mode",
+      "error_file" : "./logs/static-err.log",
+      "out_file"   : "./logs/static-out.log",
+      "pid_file"   : "./logs/static.pid"
+    },
+    {
+      "name"      : "static-2",
+      "script"    : "./server/services/static.js",
+      "env": {
+        "NODE_ENV": "production",
+        "STATIC_PORT": 5101,
         "PUBLIC_FOLDER": "app"
       },
       "instances"  : 1,
