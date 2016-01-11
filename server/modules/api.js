@@ -37,7 +37,7 @@ class Api {
         
         app.server = http.createServer(app);
         app.server.listen(app.get('port'), () => {
-            Logger.info(`Server listen on ${app.get('port')}`);
+            Logger.info(`API server listen on ${app.get('port')}`);
         });
 
         self.io = socketio(app.server);

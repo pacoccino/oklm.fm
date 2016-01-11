@@ -5,7 +5,7 @@
     "songHistory": "songhistory"
   },
   "log":{
-    "path": "log/Dev" 
+    "path": "logs/Dev"
   },
   "apiRadioUrl":  "http://oklmtitle.radioking.fr/api/radio/3093/",
   "crawler": {

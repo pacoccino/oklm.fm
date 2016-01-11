@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://5169959@git.dc0.gpaas.net/default.git"
+    "url": "git@gitlab.com:pakokrew/oklm.fm.git"
   },
   "engines": {
     "node": "~4.2.2"

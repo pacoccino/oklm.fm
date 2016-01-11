@@ -102,8 +102,12 @@ $ npm run service-static:{{start/stop}}
 $ npm run services-{{start/stop}}
 ```
 
+IV. All-in-one server
 
- 
+```sh
+$ npm run services-thrifty:{{start/stop}}
+```
+
 LOG
 -------------
 
