@@ -5,7 +5,7 @@ http.globalAgent.maxSockets = Infinity;
 const request = require('request');
 
 const address = 'http://api.oklm.fm';
-const nbRequest = 2500;
+const nbRequest = 500;
 const nginxBadGatewayPageLength = 568;
 const indexHtmlPageLength = 1388;
 const globalTime = Date.now();

@@ -1,5 +1,5 @@
 .idea/
 app/
 node_modules/
-log/
-/npm-debug.log
+logs/
+npm-debug.log

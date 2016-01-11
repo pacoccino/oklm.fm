@@ -14,4 +14,3 @@ module.exports = Object.assign({}, defaultConfig, {
     'publicFolder': process.env.PUBLIC_FOLDER || defaultConfig.static.publicFolder
   }
 });
-  

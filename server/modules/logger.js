@@ -6,19 +6,19 @@ var Logger = new (winston.Logger)({
         new (winston.transports.Console)({
             level: 'info'
         }),
-        new (winston.transports.File)({
+        new (winston.transports.Console)({
             name: 'info-file',
-            filename: `${Config.log.path}/log-${process.pid}.log`,
+            //filename: `${Config.log.path}/log-${process.pid}.log`,
             level: 'info'
         }),
-        new (winston.transports.File)({
+        new (winston.transports.Console)({
             name: 'error-file',
-            filename: `${Config.log.path}/error-${process.pid}.log`,
+            //filename: `${Config.log.path}/error-${process.pid}.log`,
             level: 'error'
         }),
-        new (winston.transports.File)({
+        new (winston.transports.Console)({
             name: 'silly-file',
-            filename: `${Config.log.path}/silly-${process.pid}.log`,
+            //filename: `${Config.log.path}/silly-${process.pid}.log`,
             level: 'silly'
         })
     ]
