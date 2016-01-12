@@ -29,7 +29,7 @@
       "script"    : "./server/services/crawler.js",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 4000
+        "CRAWLER_PORT": 4000
       },
       "exec_mode"  : "fork_mode",
       "error_file" : "./logs/crawler-err.log",

@@ -27,7 +27,7 @@ Connector.prototype.listenAsCrawler = function() {
         res.end("Worker empty http server");
     };
     var server = http.createServer(sillyMiddleware);
-    server.listen(Config.crawler.port, () => {
+    server.listen(Config.crawler.CRAWLER_PORT, () => {
         Logger.info(`Server listen on ${Config.crawler.port}`);
     });
 
