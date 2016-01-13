@@ -1,40 +1,32 @@
 'use strict';
 
 const winston = require('winston');
+const dateFormat = require('dateformat');
+const colors = require('colors/safe');
+
 const Config = require('./config');
 
+var dateFilter = function(level, msg, meta) {
+    var date = new Date();
+    var fmtDate = dateFormat(date, "[HH:mm:ss]");
+    fmtDate = colors.cyan(fmtDate);
+    return fmtDate + " " + msg;
+};
+
 var Logger = new (winston.Logger)({
+    filters: [dateFilter],
     transports: [
         new (winston.transports.Console)({
-            level: 'info'
+            level: 'info',
+            colorize: true
         }),
-        new (winston.transports.Console)({
-            name: 'info-file',
-            //filename: `${Config.log.path}/log-${process.pid}.log`,
-            level: 'info'
-        }),
-        new (winston.transports.Console)({
-            name: 'error-file',
-            //filename: `${Config.log.path}/error-${process.pid}.log`,
-            level: 'error'
-        }),
-        new (winston.transports.Console)({
-            name: 'silly-file',
-            //filename: `${Config.log.path}/silly-${process.pid}.log`,
-            level: 'silly'
+        new (winston.transports.File)({
+            name: 'silly-logger',
+            filename: `${Config.log.path}/silly-${process.pid}.log`,
+            level: 'silly',
+            maxsize: 5242880 //5MB
         })
     ]
 });
-
-/*TEMP*/
-function tempLog () {
-    let _log = console.log;
-    console.log = function(val) {
-        _log(`${new Date(Date.now())}[${val}]`);
-    };
-    console.silly = console.warning = console.info = console.log;
-    Logger = console;
-}
-tempLog();
 
 module.exports = Logger;

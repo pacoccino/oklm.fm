@@ -19,8 +19,6 @@ class Api {
 
         this.initializeApiServer();
         this.linkConnector(connector);
-
-        Logger.info("Api ready");
     }
 
     initializeApiServer() {
@@ -37,7 +35,8 @@ class Api {
         });
         
         app.use(function(req, res, next){
-            Logger.info(`New connection on process api ${process.pid}`);
+            Logger.silly(`New connection on process api ${process.pid}`);
+
             next();
         });
         
@@ -49,7 +48,7 @@ class Api {
         self.io = socketio(app.server);
 
         self.io.on('connection', function (socket) {
-            Logger.info(`New client ws on process web ${process.pid}`);
+            Logger.silly(`New client ws on process web ${process.pid}`);
 
             if(self.songInfo) {
                 socket.emit(Config.messages.songInfo, self.songInfo);

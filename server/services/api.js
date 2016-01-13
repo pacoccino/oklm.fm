@@ -11,7 +11,7 @@ connector.listenAsApi(function(error) {
     var apiServer = new ApiServer(connector);
   }
   else {
-    Logger.error("Api sever failed to connect to crawler after " + error.nbAttempts + " attempts. Shutting down...", error.socketErr);
+    Logger.error("Api sever failed to connect to crawler. Shutting down...", error.socketErr);
     process.exit(-1);
   }
 });
