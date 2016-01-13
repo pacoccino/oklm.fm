@@ -5,12 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js",
+    "start": "node server/services/thrifty.js",
     "postinstall": "npm run build",
     "build": "grunt build",
     "service-crawler": "node ./server/services/crawler.js",
     "service-api": "node ./server/services/api.js",
-    "service-static": "ndoe ./server/services/static.js",
+    "service-static": "node ./server/services/static.js",
     "services-start": "npm run service-crawler && npm run service-api && npm run service-static",
     "pm2:start": "npm run logs:clean && pm2 start config/pm2-app.json",
     "logs:clean": "rm -Rf ./logs/**",
@@ -25,13 +25,14 @@
     "url": "git@gitlab.com:pakokrew/oklm.fm.git"
   },
   "engines": {
-    "node": "~4.2.2"
+    "node": "~4.2.4"
   },
   "author": "pakokrew",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
     "cookie-parser": "^1.4.0",
+    "dateformat": "^1.0.12",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "grunt": "^0.4.5",
