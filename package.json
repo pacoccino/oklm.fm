@@ -10,7 +10,7 @@
     "build": "grunt build",
     "service-crawler": "node ./server/services/crawler.js",
     "service-api": "node ./server/services/api.js",
-    "service-static": "ndoe ./server/services/static.js",
+    "service-static": "node ./server/services/static.js",
     "services-start": "npm run service-crawler && npm run service-api && npm run service-static",
     "pm2:start": "npm run logs:clean && pm2 start config/pm2-app.json",
     "logs:clean": "rm -Rf ./logs/**",

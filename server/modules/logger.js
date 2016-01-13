@@ -17,14 +17,43 @@ var Logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
             level: 'info'
-        }),
-        new (winston.transports.File)({
-            name: 'silly-logger',
-            filename: `${Config.log.path}/silly-${process.pid}.log`,
-            level: 'silly',
-            maxsize: 5242880 //5MB
         })
     ]
 });
+
+Logger.fileLogByProcessType = function(processType) {
+
+    var filePath = `${Config.log.path}/`;
+
+    if(processType) {
+        filePath += `${processType}-`;
+    }
+
+    Logger.add(winston.transports.File, {
+        name: 'sillyProcessType',
+        filename:  filePath + 'silly.log',
+        level: 'silly',
+        maxsize: 5242880 //5MB
+    });
+};
+
+Logger.fileLogByLaunchTime = function(processType) {
+
+    var startDate = dateFormat(new Date(), "yyyy.mm.dd-HH.mm.ss");
+    var filePath = `${Config.log.path}/${startDate}-`;
+
+    if(processType) {
+        filePath += `${processType}-`;
+    }
+
+    //filePath += `${process.pid}-`;
+
+    Logger.add(winston.transports.File, {
+        name: 'sillyLaunchTime',
+        filename:  filePath + 'silly.log',
+        level: 'silly',
+        maxsize: 5242880 //5MB
+    });
+};
 
 module.exports = Logger;

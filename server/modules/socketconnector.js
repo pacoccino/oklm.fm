@@ -28,7 +28,7 @@ Connector.prototype.listenAsCrawler = function(callback) {
     };
     var server = http.createServer(sillyMiddleware);
     server.listen(Config.crawler.port, () => {
-        Logger.info(`Server listen on ${Config.crawler.address}:${Config.crawler.port}`);
+        Logger.info(`Crawler listen on ${Config.crawler.address}:${Config.crawler.port}`);
         callback(null);
     });
 
