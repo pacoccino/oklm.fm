@@ -6,33 +6,192 @@
     <link rel="stylesheet" href="assets/styles/normalize.css"/>
     <link rel="stylesheet" href="assets/styles/style.css"/>
 
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
     <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
 
     <style>
         html, body {
-            width: 100%;
-            height: 100%;
             background-color: black;
+            height: 95%;
             font-family: Caviar, OpenSans;
         }
         .content {
             position: relative;
-            top: 30%;
-            width: 100%;
-            margin: auto;
+            top: 10%;
+            max-width: 80%;
+            height: 85%;
+            overflow: hidden;
             color: white;
+            margin: auto;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-weight: 500;
             text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-weight: 500;
+        }
+        p{
+            font-weight: 400;
+            font-size: 0.9em;
         }
         a {
+            text-transform: uppercase;
+            font-size: 0.8em;
+            text-decoration: none;
+            color: #EFD4D4;
+        }
+        a:visited {
+            color: #EFD4D4;
+        }
+        .bgcontainer {
+            position: fixed;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .bgimage {
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0.3;
+        }
 
-            color: white;
+        .pageselector {
+            margin-top: 32px;
+            position: relative;
+            left: 50%;
+            cursor: pointer;
+        }
+        .pageselector img {
+            width:24px;
+        }
+        #page1 {
+            position: absolute;
+        }
+        #page2 {
+            position: absolute;
+        }
+        .hideleft{
+            transform: translate(-200%,0);
+        }
+        .hideright{
+            transform: translate(200%,0);
+        }
+        .show {
+            transform: translate(0,0);
+        }
+        .pages {
+            width: 100%;
+        }
+        .trans {
+            -webkit-transition: transform 0.8s ease;
+        }
+        .goback {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+        .contact {
+            position: fixed;
+            bottom: 20px;
+            left: 48%;
         }
     </style>
 </head>
 <body>
-<div class="content">
-   Ce site est un client web non-officiel pour la <a href="http://www.oklmradio.com/">radio OKLM</a><br/>
-   <a href="mailto:contact@oklm.fm">contact@oklm.fm</a>
+
+<div class="bgcontainer">
+    <img class="bgimage" src="assets/images/bgHeadset.jpg" />
 </div>
+
+<div class="goback">
+    <a href="/">Retour au site</a>
+</div>
+<div class="contact">
+    <a href="mailto:contact@oklm.fm">contact@oklm.fm</a>
+</div>
+
+<div class="content">
+
+    <h1>Informations légales:</h1>
+
+    <div class="pages">
+        <div id="page1" class="trans show">
+            <h2>1. Application</h2>
+            <p>
+                Ce site est un client web non-officiel pour la <a href="http://www.oklmradio.com/">radio OKLM.</a>. Vous pouvez retrouvez les applications mobiles sur le <a href="http://www.oklmradio.com/">site officiel</a>.<br/>
+            </p>
+            <p>En surfant sur le site www.oklm.fm (ci-après dénommé le « Site Web »), en lisant des documents, en  téléchargeant des fichiers, en les consultant et/ou en les utilisant d’une quelconque manière, vous marquez votre accord sur les conditions et dispositions qui suivent ci-après et vous vous engagez à les respecter. Seules ces dispositions sont valables, à l’exclusion de toutes autres conditions</p>
+
+            <h2>2. oklm.fm</h2>
+
+            <p>Ce Site Web est un web player non officiel de l’application «radio OKLM». Cette dernière demeure la seule et unique version officielle de la «radio OKLM». Afin de retrouver plus de détails quand à cette dernière, rendez-vous à l’adresse www.oklmradio.com.</p>
+
+
+            <h2>3. Accès</h2>
+
+            <p>3.1. Le présent Site Web peut être consulté par des ordinateurs récents sur lequel un software courant est installé (navigateur, système opérationnel, etc.).  ne garantit aucune compatibilité et ne peut nullement être tenue responsable si vous ne pouvez consulter et/ou utiliser tout ou partie du présent Site Web, quelle qu’en soit la raison.3.2. Il est strictement interdit, de quelque manière que ce soit et quels que soient les moyens techniques utilisés, de tenter de se procurer l’accès à des parties qui ne sont pas placées publiquement en ligne. Il est également strictement interdit de modifier le présent Site Web, de quelque manière que ce soit et quels que soient les moyens techniques utilisés.</p>
+
+            <p>3.3. Vous vous engagez à ne pas poser d’acte, quels que soient les moyens techniques utilisés, qui à un quelconque moment pourrait compromettre le bon fonctionnement du présent Site Web, de quelque manière que ce soit.
+
+
+            <h2>4. Propriété intelectuelle</h2>
+
+            <p>La reproduction partielle ou totale, la distribution, la vente, le partage, la publication, l’adaptation et/ou l’utilisation, sous quelque forme et de quelque manière que ce soit, de ce Site Web et de son contenu, sont strictement interdits. Le stockage d’une quelconque information et/ou élément de ce Site Web dans une base de données (électronique) n’est pas autorisé, à l’exception de la prise automatique d’information par le navigateur.
+
+            <div class="pageselector">
+                <a id="firstpage"><img src="assets/images/right.png" /></a>
+            </div>
+        </div>
+
+        <div id="page2" class="trans hideright">
+            <h2>5. Responsabilité</h2>
+
+            <p>Virus Bien que ce Site Web mette ses meilleurs moyens en œuvre pour maintenir le présent site libre de bug, virus, trojan horse et spyware, il ne peut pas être exclu que ceux-ci puissent encore survenir. Ce Site Web ne peut nullement être tenu responsable pour tout préjudice et/ou perte qui en résulterait. Ce Site Web vous conseille fortement d’installer les firewall, anti-virus et autres softwares de protection nécessaires, afin d’empêcher les éventuels endommagements de votre ordinateur. Ainsi, si vous constatez la présence d’un des éléments précités sur le présent Site Web, vous êtes invités à les communiquer au webmaster afin que les mesures nécessaires puissent être prises.</p>
+            <h2>6. Vie privée</h2>
+
+            <p>6.1. Les données personnelles Sur ce Site Web, nous collectons vos données personnelles. Ces données sont gérées par notre entreprise. Nous conservons les informations suivantes lors de votre visite sur notre Site Web:
+                - Votre « domain name » (adresse IP) lorsque vous visitez notre page web.
+                - L’ensemble de l’information concernant les pages que vous avez consultées sur notre Site Web.6.2. Ces informations sont utilisées pour:
+                - Améliorer le contenu de notre Site Web.</p>
+
+
+
+            <h2>7. Dispositions finales</h2>
+
+            <p>7.1. Invalidité Ce disclaimer est divisible. En conséquence, la nullité d’une ou de plusieurs dispositions n’affecte aucunement la validité des autres dispositions. Si une quelconque partie de ce disclaimer est déclarée démesurément vaste, la disposition sera, malgré ce fait, réalisable jusqu’au maximum autorisé par la loi. Si une quelconque partie de ce disclaimer est considéré comme complètement invalide, ce Site Web la remplacera par une disposition qui s’approchera le plus près possible de l’effet économique de la disposition déclarée invalide.7.2. Disclaimer Ce disclaimer peut, sans avertissement préalable, être adapté notamment en fonction des évolutions législatives. Vous êtes donc invités à le vérifier régulièrement et, le cas échéant, vérifier quelles modifications ont été apportées. Les modifications entrent en vigueur dès qu’elles sont publiées sur le Site Web.</p>
+
+            <div class="pageselector">
+                <a id="secondpage"><img src="assets/images/left.png" /></a>
+            </div>
+        </div>
+
+    </div>
+    <!--
+            Ce site est un client web non-officiel pour la <a href="http://www.oklmradio.com/">radio OKLM</a><br/>
+           <a href="mailto:contact@oklm.fm">contact@oklm.fm</a>-->
+</div>
+
+<script>
+    $('#firstpage').click(function() {
+        $('#page1').removeClass('show');
+        $('#page2').addClass('show');
+
+        $('#page1').addClass('hideleft');
+        $('#page2').removeClass('hideright');
+    });
+    $('#secondpage').click(function() {
+        $('#page2').removeClass('show');
+        $('#page1').addClass('show');
+
+        $('#page1').removeClass('hideleft');
+        $('#page2').addClass('hideright');
+    });
+</script>
 </body>
 </html>

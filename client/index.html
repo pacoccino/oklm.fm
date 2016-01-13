@@ -45,17 +45,17 @@
             <img src="assets/images/pause.png" class="btn-play" id="cover-pause" ng-click="pause()" ng-show="playing">
         </div>
 
-        <div class="history-opener" ng-click="openHistory()" ng-hide="historyOpened" class="coo">
-            <img src="assets/images/history.png" class="coo" />
-        </div>
-
         <div class="links">
             <div class="link">
-                <a target="_blank" id="deezer-search" title="Chercher sur Deezer" ng-href="song.deezerUrl" ng-show="song.deezerUrl"><img src="assets/images/deezer.png"></a>
+                <a id="deezer-search" title="Chercher sur Deezer" ng-click="openExternal(song, 'itunes')" ng-show="song.deezerUrl"><img src="assets/images/deezer.png"></a>
             </div>
             <div class="link">
-                <a target="_blank" id="itunes-search" title="Acheter sur iTunes" ng-href="song.buy_link" ng-show="song.buy_link"><img src="assets/images/itunes.png"></a>
+                <a id="itunes-search" title="Acheter sur iTunes" ng-click="openExternal(song, 'deezer')" ng-show="song.buy_link"><img src="assets/images/itunes.png"></a>
             </div>
+        </div>
+
+        <div class="history-opener" ng-click="openHistory()" ng-hide="historyOpened" class="coo">
+            <img src="assets/images/history.png" class="coo" />
         </div>
     </div>
 
@@ -92,8 +92,11 @@
                             <span ng-show="histSong && histSong.artist && histSong.title"> - </span>
                             <span class="title" ng-bind="histSong.title"></span>
                         </td>
+                        <td class="link" ng-show="histSong.buy_link">
+                            <a class="hover-act" title="Acheter sur iTunes" ng-click="openExternal(histSong, 'itunes')"><img src="assets/images/itunes.png"></a>
+                        </td>
                         <td class="link">
-                            <a class="hover-act" ng-click="historyExternalOpen(histSong)"><img src="assets/images/itunes.png"></a>
+                            <a class="hover-act" title="Chercher sur Deezer" ng-click="openExternal(histSong, 'deezer')"><img src="assets/images/deezer.png"></a>
                         </td>
                     </tr>
                 </table>
@@ -104,6 +107,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -65,6 +65,8 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
     };
 
     var safePlay = function () {
+        //return;
+
         if ($scope.playing) {
             audioElement.load();
             audioElement.play();
@@ -143,8 +145,8 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
         str = str || "";
         var res = str.toLowerCase();
 
-        res = res.replace('(', '');
-        res = res.replace(')', '');
+        res = res.replace(/\(/g, '');
+        res = res.replace(/\)/g, '');
 
         var iFeat = res.indexOf('feat');
         if(iFeat !== -1) {
@@ -181,10 +183,23 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
         $scope.history = data;
     };
 
-    $scope.historyExternalOpen = function(song) {
-        ga('send', 'event', 'searchsong', 'itunes', 'fromHistory');
+    $scope.openExternal = function(song, type, fromHistory) {
 
-        $window.open(song.buy_link, '_blank');
+        var url = null;
+        switch(type) {
+            case 'itunes':
+                url = song.buy_link;
+                break;
+            case 'deezer':
+                url = deezerLink(song);
+                break;
+        }
+
+        if(url) {
+            ga('send', 'event', 'searchsong', type, fromHistory ? 'fromHistory' : false);
+
+            $window.open(url, '_blank');
+        }
     };
 
     var asyncAngularify = function(fn) {
