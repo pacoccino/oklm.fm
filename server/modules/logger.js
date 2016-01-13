@@ -2,14 +2,13 @@
 
 const winston = require('winston');
 const dateFormat = require('dateformat');
-const colors = require('colors/safe');
 
 const Config = require('./config');
 
 var dateFilter = function(level, msg, meta) {
     var date = new Date();
-    var fmtDate = dateFormat(date, "[HH:mm:ss]");
-    fmtDate = colors.cyan(fmtDate);
+    var fmtDate = dateFormat(date, "[dd/mm/yyyy HH:mm:ss]");
+
     return fmtDate + " " + msg;
 };
 
@@ -17,8 +16,7 @@ var Logger = new (winston.Logger)({
     filters: [dateFilter],
     transports: [
         new (winston.transports.Console)({
-            level: 'info',
-            colorize: true
+            level: 'info'
         }),
         new (winston.transports.File)({
             name: 'silly-logger',

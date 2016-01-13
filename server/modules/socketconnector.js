@@ -78,7 +78,7 @@ Connector.prototype.listenAsApi = function(callback) {
         self.binded = true;
 
         serverSocket.on('disconnect', function() {
-            Logger.warning("Crawler disconnected, shutting down ...");
+            Logger.warn("Crawler disconnected, shutting down ...");
 
             process.exit(0);//TODO
         });
@@ -87,7 +87,7 @@ Connector.prototype.listenAsApi = function(callback) {
     });
 
     serverSocket.on('reconnect_attempt', function() {
-        Logger.warning("Connection lost, trying to reconnect...");
+        Logger.warn("Connection lost, trying to reconnect...");
     });
     
     serverSocket.on('reconnect', function() {
