@@ -90,7 +90,7 @@ module.exports = function(grunt) {
                 },
                 js: {
                     files: {
-                        'app/assets/app.js': [appDir + "/assets/app.js"]
+                        'app/app.js': [appDir + "/app.js"]
                     }
                 }
             },
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('buildProd', ['less', 'copy:app', 'uglify']);
 
-    grunt.registerTask('build', ['less', 'copy:app'/*, 'uglify'*/]);
+    grunt.registerTask('build', ['less', 'copy:app']);
     grunt.registerTask('watch', ['watch']);
 
     grunt.registerTask('default', 'build');

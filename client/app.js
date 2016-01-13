@@ -1,6 +1,6 @@
 var angularApp = angular.module('oklm.fm', []);
 
-angularApp.directive('clickout', function($timeout) {
+angularApp.directive('clickout', ['$timeout', function($timeout) {
 
     return {
         restrict: 'A',
@@ -21,7 +21,7 @@ angularApp.directive('clickout', function($timeout) {
             $(document).click(checkMe);
         }
     };
-});
+}]);
 
 angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', function($scope, $interval, $timeout, $window) {
 
