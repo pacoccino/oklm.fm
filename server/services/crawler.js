@@ -3,7 +3,18 @@
 
 var connector = require('./../modules/socketconnector')();
 var Crawler = require('./../modules/crawler');
+var Logger = require('./../modules/logger');
 
-connector.listenAsCrawler();
-var crawler = new Crawler(connector);
+connector.listenAsCrawler(function(error) {
+
+  if(error) {
+    
+    throw error;
+    
+  } else {
+    
+    var crawler = new Crawler(connector);
+  }
+
+});
 

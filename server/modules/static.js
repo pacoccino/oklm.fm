@@ -15,8 +15,7 @@ WebServer.launch = function() {
     app.set('port', Config.static.port);
 
     app.use( (req, res, next) => {
-
-        Logger.silly(`New connection on process api ${process.pid}`);
+        
         next();
 
     });

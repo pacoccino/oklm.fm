@@ -14,7 +14,7 @@ var Connector = function() {
 
 Connector.prototype = Object.create(EventEmitter.prototype);
 
-Connector.prototype.listenAsCrawler = function() {
+Connector.prototype.listenAsCrawler = function(callback) {
     // Bind socket port
     // broadcasts to web(s)
 
@@ -27,12 +27,13 @@ Connector.prototype.listenAsCrawler = function() {
         res.end("Worker empty http server");
     };
     var server = http.createServer(sillyMiddleware);
-    server.listen(Config.crawler.CRAWLER_PORT, () => {
-        Logger.info(`Server listen on ${Config.crawler.port}`);
+    server.listen(Config.crawler.port, () => {
+        Logger.info(`Server listen on ${Config.crawler.address}:${Config.crawler.port}`);
+        callback(null);
     });
 
     var io = socketioServer(server);
-
+    
     io.on('connect', function(socket) {
         Logger.info('New webserver connected');
 
@@ -88,12 +89,14 @@ Connector.prototype.listenAsApi = function(callback) {
     serverSocket.on('reconnect_attempt', function() {
         Logger.warning("Connection lost, trying to reconnect...");
     });
+    
     serverSocket.on('reconnect', function() {
         Logger.info("Reconnected to worker");
     });
 
     serverSocket.on('connect_error', function(error) {
-        callback(error);
+        //debugger;
+        //callback(error);
     });
 };
 
