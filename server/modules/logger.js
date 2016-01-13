@@ -1,3 +1,5 @@
+'use strict';
+
 const winston = require('winston');
 const Config = require('./config');
 
@@ -23,5 +25,16 @@ var Logger = new (winston.Logger)({
         })
     ]
 });
+
+/*TEMP*/
+function tempLog () {
+    let _log = console.log;
+    console.log = function(val) {
+        _log(`${new Date(Date.now())}[${val}]`);
+    };
+    console.silly = console.warning = console.info = console.log;
+    Logger = console;
+}
+tempLog();
 
 module.exports = Logger;
