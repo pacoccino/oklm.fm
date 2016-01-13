@@ -205,12 +205,8 @@
         audiolink();
 
         var socket = io();
-        socket.on('songinfo', function (data) {
-            updateSonginfo(data);
-        });
-        socket.on('songhistory', function (data) {
-            updateSongHistory(data);
-        });
+        socket.on('songinfo', updateSonginfo);
+        socket.on('songhistory', updateSongHistory);
 
         addEvents();
 

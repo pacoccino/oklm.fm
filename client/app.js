@@ -1,6 +1,29 @@
 var angularApp = angular.module('oklm.fm', []);
 
-angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval) {
+angularApp.directive('clickout', function($timeout) {
+
+    return {
+        restrict: 'A',
+        scope: { clickoutFn: '&' },
+        link: function(scope, element) {
+            var checkMe = function(event) {
+                if(element.find(event.target).length !== 0) {
+                    return;
+                }
+                if($(event.target).hasClass('coo')) {
+                    return;
+                }
+                $timeout(function() {
+                    scope.clickoutFn()();
+                });
+            };
+
+            $(document).click(checkMe);
+        }
+    };
+});
+
+angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', function($scope, $interval, $timeout, $window) {
 
     var audioElement = null;
 
@@ -17,10 +40,16 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
     ];
 
     $scope.playing = false;
-    $scope.song = {};
+    $scope.song = {
+        coverUrl: "assets/images/pirates.jpg"
+    };
     $scope.motto = "Radio Pirate";
     $scope.history = [];
     $scope.historyOpened = false;
+
+    var onces = {
+        firstPlay: true
+    };
 
     $scope.openHistory = function() {
         ga('send', 'event', 'history', 'open');
@@ -28,9 +57,11 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         $scope.historyOpened = true;
     };
     $scope.closeHistory = function() {
-        ga('send', 'event', 'history', 'close');
+        if($scope.historyOpened) {
+            ga('send', 'event', 'history', 'close');
 
-        $scope.historyOpened = false;
+            $scope.historyOpened = false;
+        }
     };
 
     var safePlay = function () {
@@ -47,7 +78,12 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         safePlay();
         setTimeout(safePlay, 30 * 60 * 1000);
 
-        ga('send', 'event', 'play');
+        if(onces.firstPlay) {
+            onces.firstPlay = false;
+        }
+        else {
+            ga('send', 'event', 'play');
+        }
     };
 
     $scope.pause = function() {
@@ -135,14 +171,28 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         else {
             $scope.song.deezerUrl = null;
         }
+
+        if(data.cover) {
+            $scope.song.coverUrl = uris.c + data.cover;
+        }
     };
 
     var updateSongHistory = function(data) {
         $scope.history = data;
     };
 
-    $scope.historyExternalHref = function(song) {
-        return song.buy_link;
+    $scope.historyExternalOpen = function(song) {
+        ga('send', 'event', 'searchsong', 'itunes', 'fromHistory');
+
+        $window.open(song.buy_link, '_blank');
+    };
+
+    var asyncAngularify = function(fn) {
+        return function(data) {
+            $timeout(function() {
+                fn(data);
+            });
+        };
     };
 
     var init = function () {
@@ -156,8 +206,8 @@ angularApp.controller('Ctrl', ['$scope', '$interval', function($scope, $interval
         audiolink();
 
         var socket = io();
-        socket.on('songinfo', updateSongInfo);
-        socket.on('songhistory', updateSongHistory);
+        socket.on('songinfo', asyncAngularify(updateSongInfo));
+        socket.on('songhistory', asyncAngularify(updateSongHistory));
 
         addEvents();
 

@@ -126,6 +126,8 @@ var updateApi = function() {
 
 io.on('connection', function (socket) {
   socket.emit('songinfo', songState);
+  socket.emit('songhistory', songHistory);
+
 });
 
 setInterval(updateApi, 8000);
