@@ -92,8 +92,8 @@
                             <span ng-show="histSong && histSong.artist && histSong.title"> - </span>
                             <span class="title" ng-bind="histSong.title"></span>
                         </td>
-                        <td class="link" ng-show="histSong.buy_link">
-                            <a class="hover-act" title="Acheter sur iTunes" ng-click="openExternal(histSong, 'itunes')"><img src="assets/images/itunes.png"></a>
+                        <td class="link">
+                            <a class="hover-act" title="Acheter sur iTunes" ng-click="openExternal(histSong, 'itunes')" ng-show="histSong.buy_link"><img src="assets/images/itunes.png"></a>
                         </td>
                         <td class="link">
                             <a class="hover-act" title="Chercher sur Deezer" ng-click="openExternal(histSong, 'deezer')"><img src="assets/images/deezer.png"></a>
