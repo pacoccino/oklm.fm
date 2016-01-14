@@ -75,7 +75,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
     };
 
     var safePlay = function () {
-        return;
+        //return;
 
         if ($scope.playing) {
             audioElement.load();
@@ -107,7 +107,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
         ga('send', 'event', 'pause');
     };
 
-    var playpause = function () {
+    $scope.playpause = function () {
         $scope.playing ? $scope.pause() : $scope.play();
     };
 
@@ -124,7 +124,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
         $(document).keypress(function (e) {
             if (e.charCode === 32) {
                 ga('send', 'event', 'spacebar');
-                playpause();
+                $timeout($scope.playpause);
             }
         });
 

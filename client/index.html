@@ -45,7 +45,7 @@
             <img src="assets/images/pause.png" class="btn-play" id="cover-pause" ng-click="pause()" ng-show="playing">
         </div>
 
-        <div class="links">
+        <div class="links hide-sm">
             <div class="link">
                 <a id="deezer-search" title="Chercher sur Deezer" ng-click="openExternal(song, 'itunes')" ng-show="song.deezerUrl"><img src="assets/images/deezer.png"></a>
             </div>
@@ -54,20 +54,8 @@
             </div>
         </div>
 
-        <div class="history-opener" ng-click="openHistory()" ng-hide="historyOpened" class="coo">
+        <div class="history-opener hide-sm" ng-click="openHistory()" class="coo">
             <img src="assets/images/history.png" class="coo" />
-        </div>
-    </div>
-
-    <div class="apps">
-        <div class="text noselect">
-            Retrouvez la version officielle sur
-        </div>
-        <div class="android">
-            <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
-        </div>
-        <div class="apple">
-            <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
         </div>
     </div>
 
@@ -76,8 +64,6 @@
         <span ng-show="song && song.artist && song.title"> - </span>
         <span class="title" ng-bind="song.title"></span>
     </div>
-
-    <div class="informations"><a target="_blank" id="informations" href="backstage.html">Informations</a></div>
 
     <div class="history-container" ng-show="historyOpened">
         <div class="history" clickout clickout-fn="closeHistory" ng-class="{open: historyOpenedD}">
@@ -92,14 +78,20 @@
                             <span ng-show="histSong && histSong.artist && histSong.title"> - </span>
                             <span class="title" ng-bind="histSong.title"></span>
                         </td>
-                        <td class="link">
+                        <td class="link hide-sm">
                             <a class="hover-act" title="Acheter sur iTunes" ng-click="openExternal(histSong, 'itunes')" ng-show="histSong.buy_link"><img src="assets/images/itunes.png"></a>
                         </td>
-                        <td class="link">
+                        <td class="link hide-sm">
                             <a class="hover-act" title="Chercher sur Deezer" ng-click="openExternal(histSong, 'deezer')"><img src="assets/images/deezer.png"></a>
                         </td>
                     </tr>
                 </table>
+            </div>
+            <div class="history-footer">
+                    <img ng-src="{{playing ? 'assets/images/pause.png' : 'assets/images/play.png'}}" ng-click="playpause()"/>
+                    <span class="artist" ng-bind="song.artist"></span>
+                    <span ng-show="song && song.artist && song.title"> - </span>
+                    <span class="title" ng-bind="song.title"></span>
             </div>
 
             <div class="close-btn">
@@ -108,6 +100,28 @@
         </div>
     </div>
 
+    <div class="apps hide-sm">
+        <div class="text noselect">
+            Retrouvez la version officielle sur
+        </div>
+        <div class="android">
+            <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
+        </div>
+        <div class="apple">
+            <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
+        </div>
+    </div>
+
+    <div class="history-opener-mobile tl hide-lm" ng-hide="historyOpened" ng-click="openHistory()" class="coo">
+        <img src="assets/images/history.png" class="coo" />
+    </div>
+    <div class="informations tr">
+        <p>Web player non officiel.</p>
+    </div>
+    <div class="informations br hide-sm">
+        <p><a id="mailto" href="mailto:contact@oklm.fm">©Dark_Matter_Society</a></p>
+        <p><a target="_blank" id="informations" href="backstage.html">Informations légales</a></p>
+    </div>
 
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

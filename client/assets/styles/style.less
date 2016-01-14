@@ -234,6 +234,12 @@ a:visited {
     position: relative;
     color: white;
 
+    text-align: center;
+    width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     a {
       color: white;
       text-decoration: none;
@@ -250,20 +256,44 @@ a:visited {
 
   .informations {
     position: fixed;
-    left:20px;
-    top: 20px;
+    &.br {
+      right:20px;
+      bottom: 10px;
+    }
+    &.tr {
+      right:20px;
+      top: 5px;
+    }
 
+    text-align: right;
     a{
-      text-transform: uppercase;
       text-decoration: none !important;
     }
     color: white;
     font-size: 0.7em;
   }
 
+  .history-opener-mobile {
+    position: fixed;
+    &.tl {
+      left:10px;
+      top: 10px;
+    }
+    cursor: pointer;
+    img{
+      width:26px;
+      opacity: 0.4;
+    }
+    &:hover {
+      img{
+        opacity: 1;
+      }
+    }
+  }
+
   .apps {
     position: fixed;
-    left: 10px;
+    left: 15px;
     bottom: 42px;
     display: flex;
     flex-direction: row;
@@ -296,12 +326,14 @@ a:visited {
     position: relative;
     z-index: 10;
 
+    height: 0;
     max-height: 0;
     &.open {
-      max-height: 80%;
+      height: 80%;
+      max-height: 550px;
     }
-    -webkit-transition: max-height 0.8s ease;
-    transition: max-height 0.8s ease;
+    -webkit-transition: all 0.8s ease;
+    transition: all 0.8s ease;
 
     overflow: hidden;
 
@@ -335,7 +367,7 @@ a:visited {
     }
 
     .songs-container {
-      height: calc(~"100% - 50px");
+      height: calc(~"100% - 86px");
       width: 100%;
       top: 20px;
       overflow-x: hidden;
@@ -380,11 +412,30 @@ a:visited {
             }
           }
         }
+        .link:last-child {
+          padding-right: 6px;
+        }
+
         &:hover {
           .hover-act {
             visibility: visible;
           }
         }
+      }
+    }
+
+    .history-footer {
+      height: 46px;
+      width:100%;
+      text-align: center;
+      font-weight: 600;
+
+      padding: 8px;
+      img {
+        width: 24px;
+        padding: 6px;
+        vertical-align: middle;
+        cursor: pointer;
       }
     }
   }
@@ -416,7 +467,12 @@ a:visited {
 // Mobile tweaks
 
 @media (max-width: 600px) {
-  .apps {
+  .hide-sm {
+    display: none !important;
+  }
+}
+@media (min-width: 600px) {
+  .hide-lm {
     display: none !important;
   }
 }
