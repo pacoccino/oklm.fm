@@ -46,26 +46,36 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', fun
     $scope.motto = "Radio Pirate";
     $scope.history = [];
     $scope.historyOpened = false;
+    $scope.historyOpenedD = false;
 
     var onces = {
         firstPlay: true
     };
 
     $scope.openHistory = function() {
+
         ga('send', 'event', 'history', 'open');
 
         $scope.historyOpened = true;
+
+        $timeout(function() {
+            $scope.historyOpenedD = true;
+        });
     };
     $scope.closeHistory = function() {
         if($scope.historyOpened) {
             ga('send', 'event', 'history', 'close');
 
-            $scope.historyOpened = false;
+            $scope.historyOpenedD = false;
+
+            $timeout(function() {
+                $scope.historyOpened = false;
+            }, 700);
         }
     };
 
     var safePlay = function () {
-        //return;
+        return;
 
         if ($scope.playing) {
             audioElement.load();
