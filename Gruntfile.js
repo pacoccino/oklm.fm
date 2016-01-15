@@ -75,6 +75,16 @@ module.exports = function(grunt) {
                         },
                         {
                             expand: true,
+                            cwd: appDir + 'js',
+                            src: [
+                                "songService.js",
+                                "Controller.js",
+                                "clickoutDirective.js"
+                            ],
+                            dest: buildDir + 'js'
+                        },
+                        {
+                            expand: true,
                             cwd: appDir + "assets/fonts",
                             src: [
                                 "CaviarDreams.ttf"
