@@ -1,0 +1,15 @@
+{
+  "apps" : [
+    {
+      "name"      : "thrifty",
+      "script"    : "./server/services/thrifty.js",
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "exec_mode"  : "fork_mode",
+      "error_file" : "./logs/thrifty-err.log",
+      "out_file"   : "./logs/thrifty-out.log",
+      "pid_file"   : "./logs/thrifty.pid"
+    }
+]
+}
