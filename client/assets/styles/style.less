@@ -41,6 +41,21 @@ a:visited {
   justify-content: center;
   align-items: center;
 
+
+  .bgcontainer {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    .bgimage {
+      min-width: 100%;
+      min-height: 100%;
+      opacity: 0.3;
+    }
+  }
+
   .oklm {
     width: 100%;
     //z-index: 20;
@@ -87,6 +102,13 @@ a:visited {
         -o-transform: rotate(-90deg);
         transform: rotate(-90deg);
       }
+    }
+
+    .nonofficiel {
+      font-size: 0.8em;
+      font-weight: 400;
+      color: white;
+      text-shadow: 0 1px 4px black;
     }
 
     .slogan {
