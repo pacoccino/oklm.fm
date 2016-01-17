@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" ng-app="oklm.fm">
 <head>
     <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -17,60 +17,121 @@
     <meta name="theme-color" content="#ffffff">
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
     <script src="//api.oklm.fm/socket.io/socket.io.js"></script>
-    <script src="assets/app.js"></script>
+    <script src="app.js"></script>
 </head>
 <body>
-<div class="main">
+<div class="main" ng-controller="Ctrl">
     <div class="album-bg">
-        <img src="assets/images/pirates.jpg" id="cover-bg">
+        <img ng-src="{{song.coverUrl}}" id="cover-bg">
     </div>
 
-    <div class="oklm">
+    <div class="oklm noselect">
         <div class="logo">
             <img class="couronne" src="assets/images/couronne.png">
             <div class="title">
                 <span class="logotxt">OKLM</span><span class="logofm">.fm</span>
             </div>
         </div>
-        <div class="slogan">Radio pirate</div>
+
+        <div class="slogan" ng-bind="motto">Radio pirate</div>
     </div>
 
     <div class="central-panel">
 
         <div class="album-cover">
-            <img src="assets/images/pirates.jpg" id="cover">
-            <img src="assets/images/play.png" id="cover-resume">
-            <img src="assets/images/pause.png" id="cover-pause">
+            <img ng-src="{{song.coverUrl}}" id="cover" ng-class="{fade: !playing}">
+            <img src="assets/images/play.png" class="btn-play" id="cover-resume" ng-click="play()" ng-hide="playing">
+            <img src="assets/images/pause.png" class="btn-play" id="cover-pause" ng-click="pause()" ng-show="playing">
         </div>
 
-        <div class="links">
+        <div class="links hide-sm">
             <div class="link">
-                <a target="_blank" id="deezer-search" title="Chercher sur Deezer"><img src="assets/images/deezer.png"></a>
+                <a id="deezer-search" title="Chercher sur Deezer" ng-click="openExternal(song, 'deezer')"><img src="assets/images/deezer.png"></a>
             </div>
             <div class="link">
-                <a target="_blank" id="itunes-search" title="Acheter sur iTunes"><img src="assets/images/itunes.png"></a>
+                <a id="itunes-search" title="Acheter sur iTunes" ng-click="openExternal(song, 'itunes')" ng-show="song.buy_link"><img src="assets/images/itunes.png"></a>
             </div>
         </div>
-    </div>
 
-    <div class="apps">
-        <div class="text">
-            Retrouvez la version officielle sur
-        </div>
-        <div class="android">
-            <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
-        </div>
-        <div class="apple">
-            <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
+        <div class="history-opener hide-sm" ng-click="openHistory()" class="coo">
+            <img src="assets/images/history.png" class="coo" />
         </div>
     </div>
 
     <div class="songinfo">
-        <span class="artist" id="SI-artist"></span> - <span class="title" id="SI-title"></span>
+        <span class="artist" ng-bind="song.artist"></span>
+        <span ng-show="song && song.artist && song.title"> - </span>
+        <span class="title" ng-bind="song.title"></span>
     </div>
 
-    <div class="mfdt"><a target="_blank" id="informations" href="backstage.html">Informations</a></div>
+    <div class="history-container" ng-show="historyOpened">
+        <div class="history" clickout clickout-fn="closeHistory" ng-class="{open: historyOpenedD}">
+            <div class="history-header noselect">
+                Historique
+            </div>
+            <div class="songs-container">
+                <table class="songs">
+                    <tr class="song" ng-repeat="histSong in history">
+                        <td class="songname">
+                            <span class="artist" ng-bind="histSong.artist"></span>
+                            <span ng-show="histSong && histSong.artist && histSong.title"> - </span>
+                            <span class="title" ng-bind="histSong.title"></span>
+                        </td>
+                        <td class="link hide-sm">
+                            <a class="hover-act" title="Acheter sur iTunes" ng-click="openExternal(histSong, 'itunes')" ng-show="histSong.buy_link"><img src="assets/images/itunes.png"></a>
+                        </td>
+                        <td class="link hide-sm">
+                            <a class="hover-act" title="Chercher sur Deezer" ng-click="openExternal(histSong, 'deezer')"><img src="assets/images/deezer.png"></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="history-footer">
+                <img ng-src="{{playing ? 'assets/images/pause.png' : 'assets/images/play.png'}}" ng-click="playpause()"/>
+                <span class="artist" ng-bind="song.artist"></span>
+                <span ng-show="song && song.artist && song.title"> - </span>
+                <span class="title" ng-bind="song.title"></span>
+            </div>
+
+            <div class="close-btn">
+                <img src="assets/images/close.png" id="history-close-btn" ng-click="closeHistory()"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="appimg hide-mm">
+        <img src="assets/images/appoklm.jpg"/>
+    </div>
+    <div class="apps hide-sm">
+        <div class="text noselect">
+            <p>Ce web player est un site non-officiel.
+                <br/>
+                Si vous appreciez le concept, retrouvez la version officielle et </p>
+            <p>
+                <img src="assets/images/oklmradio.png"/>
+                gratuite sur le site OKLM radio
+            </p>
+        </div>
+        <div class="apps-links">
+            <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
+            <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
+        </div>
+    </div>
+
+    <div class="history-opener-mobile tl hide-lm" ng-hide="historyOpened" ng-click="openHistory()" class="coo">
+        <img src="assets/images/history.png" class="coo" />
+    </div>
+
+    <div class="informations tr hide-lm">
+        Web player non officiel
+    </div>
+
+    <div class="informations br hide-sm">
+        <p><a target="_blank" id="legal" href="backstage.html">Informations légales</a></p>
+        <p><a id="mailto" href="mailto:contact@oklm.fm">Contact</a></p>
+    </div>
 
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -80,7 +141,6 @@
 
         ga('create', 'UA-68373171-3', 'auto');
         ga('send', 'pageview');
-
     </script>
 </div>
 </body>

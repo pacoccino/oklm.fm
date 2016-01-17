@@ -1,5 +1,6 @@
-.idea/
-app/
-node_modules/
-logs/
+.idea
+app
+node_modules
+logs
 npm-debug.log
+style.css
