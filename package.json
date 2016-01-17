@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/services/thrifty.js",
-    "postinstall": "npm run build",
+    "start": "pm2 start config/pm2-thrifty.json",
+    "postinstall": "npm run buildProd",
     "build": "grunt build",
     "service-crawler": "node ./server/services/crawler.js",
     "service-api": "node ./server/services/api.js",
