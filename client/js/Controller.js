@@ -50,8 +50,6 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
     };
 
     var safePlay = function () {
-        return;
-
         if ($scope.playing) {
             audioElement.load();
             audioElement.play();
@@ -98,7 +96,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
     var addEvents = function () {
         $(document).keypress(function (e) {
             if (e.charCode === 32) {
-                ga('send', 'event', 'spacebar');
+                ga('send', 'event', 'keyboard', 'spacebar');
                 $timeout($scope.playpause);
             }
         });
