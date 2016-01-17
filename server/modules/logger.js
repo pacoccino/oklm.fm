@@ -32,7 +32,7 @@ Logger.fileLogByProcessType = function(processType) {
     Logger.add(winston.transports.File, {
         name: 'sillyProcessType',
         filename:  filePath + 'silly.log',
-        level: 'silly',
+        level: 'info',
         maxsize: 5242880 //5MB
     });
 };
@@ -51,7 +51,7 @@ Logger.fileLogByLaunchTime = function(processType) {
     Logger.add(winston.transports.File, {
         name: 'sillyLaunchTime',
         filename:  filePath + 'silly.log',
-        level: 'silly',
+        level: 'info',
         maxsize: 5242880 //5MB
     });
 };

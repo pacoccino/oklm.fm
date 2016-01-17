@@ -37,7 +37,7 @@ Connector.prototype.listenAsCrawler = function(callback) {
     io.on('connect', function(socket) {
         Logger.info('New webserver connected');
 
-        self.emit('newsocket');
+        self.emit('newsocket', socket);
 
         socket.on('disconnect', function() {
             Logger.info('Webserver disconnected');

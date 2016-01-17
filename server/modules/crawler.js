@@ -26,7 +26,6 @@ class CrawlWorker {
         var updater = this.updateApi.bind(this);
         setInterval(updater, Config.crawler.interval);
         this.getLive();
-        this.getHistory();
     };
 
     linkConnector(connector) {
@@ -60,12 +59,12 @@ class CrawlWorker {
         return (song1.artist !== song2.artist || song1.title !== song2.title);
     }
 
-    broadcastAllinfos() {
+    broadcastAllinfos(socket) {
         var eventSong = CrawlWorker.newSongEvent(this.songState);
         var eventHistory = CrawlWorker.historyEvent(this.songHistory);
 
-        this.notifyApiServers(eventSong);
-        this.notifyApiServers(eventHistory);
+        socket.emit('event', eventSong);
+        socket.emit('event', eventHistory);
     }
 
     getLive() {

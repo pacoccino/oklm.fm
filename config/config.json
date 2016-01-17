@@ -20,6 +20,7 @@
   "static": {
     "publicFolder": "app",
     "address": "localhost",
-    "port": 5100
+    "port": 5100,
+    "cache": 86400000
   }
 }
