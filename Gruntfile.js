@@ -67,24 +67,6 @@ module.exports = function(grunt) {
                         },
                         {
                             expand: true,
-                            cwd: appDir,
-                            src: [
-                                "app.js"
-                            ],
-                            dest: buildDir
-                        },
-                        {
-                            expand: true,
-                            cwd: appDir + 'js',
-                            src: [
-                                "songService.js",
-                                "Controller.js",
-                                "clickoutDirective.js"
-                            ],
-                            dest: buildDir + 'js'
-                        },
-                        {
-                            expand: true,
                             cwd: appDir + "assets/fonts",
                             src: [
                                 "CaviarDreams.ttf"
@@ -96,30 +78,38 @@ module.exports = function(grunt) {
             },
             uglify: {
                 options: {
-                    mangle: true
+                    mangle: true,
+                    wrap: 'global'
                 },
                 js: {
                     files: {
-                        'app/app.js': [appDir + "/app.js"]
+                        'app/app.js': ["app/app.js"]
                     }
                 }
             },
             watch: {
-                //scripts: {
-                //    files: [appDir  + '**/*.html', appDir  + '**/*.js', appDir  + '**/*.css'],
-                //    tasks: ['build']
-                //},
+                scripts: {
+                    files: [appDir  + '**/*.html', appDir  + '**/*.js', appDir  + '**/*.css'],
+                    tasks: ['build']
+                },
                 less: {
                     files: appDir + '**/*.less',
                     tasks: ['less']
+                }
+            },
+            concat: {
+                client: {
+                    banner: '/* OKLM.FM buildpack */',
+                    src: [appDir + 'app.js', appDir + 'js/*.js'],
+                    dest: buildDir + 'app.js'
                 }
             }
         });
 
 
-    grunt.registerTask('buildProd', ['less', 'copy:app', 'uglify']);
+    grunt.registerTask('buildProd', ['less', 'copy:app', 'concat:client', 'uglify']);
 
-    grunt.registerTask('build', ['less', 'copy:app']);
+    grunt.registerTask('build', ['less', 'copy:app', 'concat:client']);
     grunt.registerTask('watch', ['watch']);
 
     grunt.registerTask('default', 'build');

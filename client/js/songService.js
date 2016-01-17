@@ -104,9 +104,9 @@ angularApp.service('songService', ["$window", "$http", function($window, $http) 
             case 'deezer':
                 fct = deezerLink;
                 break;
-            case 'spotify':
+            /*case 'spotify':
                 fct = spotifyLink;
-                break;
+                break;*/
             default:
                 fct = buyLink;
                 break;
