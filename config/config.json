@@ -1,0 +1,26 @@
+{
+  "radioId": 3093,
+  "messages": {
+    "songInfo": "songinfo",
+    "songHistory": "songhistory"
+  },
+  "log":{
+    "path": "logs"
+  },
+  "apiRadioUrl":  "http://oklmtitle.radioking.fr/api/radio/3093/",
+  "crawler": {
+    "interval": 8000,
+    "address": "localhost",
+    "port": 4000
+  },
+  "api": {
+    "address": "localhost",
+    "port": 5000
+  }  ,
+  "static": {
+    "publicFolder": "app",
+    "address": "localhost",
+    "port": 5100,
+    "cache": 86400000
+  }
+}

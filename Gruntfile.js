@@ -38,12 +38,20 @@ module.exports = function(grunt) {
                             cwd: appDir + "assets/images",
                             src: [
                                 "logo.png",
+                                "logopirate.png",
                                 "applestore.svg",
                                 "pirates.jpg",
                                 "deezer.png",
                                 "itunes.png",
                                 "play.png",
                                 "pause.png",
+                                "history.png",
+                                "close.png",
+                                "left.png",
+                                "right.png",
+                                "bgHeadset.jpg",
+                                "appoklm.jpg",
+                                "oklmradio.png",
                                 "couronne.png",
                                 "favicons/apple-touch-icon-57x57.png",
                                 "favicons/favicon-16x16.png",
@@ -62,14 +70,6 @@ module.exports = function(grunt) {
                         },
                         {
                             expand: true,
-                            cwd: appDir + "assets",
-                            src: [
-                                "app.js"
-                            ],
-                            dest: buildDir + "assets"
-                        },
-                        {
-                            expand: true,
                             cwd: appDir + "assets/fonts",
                             src: [
                                 "CaviarDreams.ttf"
@@ -81,30 +81,38 @@ module.exports = function(grunt) {
             },
             uglify: {
                 options: {
-                    mangle: true
+                    mangle: true,
+                    wrap: 'global'
                 },
                 js: {
                     files: {
-                        'app/assets/app.js': [appDir + "/assets/app.js"]
+                        'app/app.js': ["app/app.js"]
                     }
                 }
             },
             watch: {
-                //scripts: {
-                //    files: [appDir  + '**/*.html', appDir  + '**/*.js', appDir  + '**/*.css'],
-                //    tasks: ['build']
-                //},
+                scripts: {
+                    files: [appDir  + '**/*.html', appDir  + '**/*.js', appDir  + '**/*.css'],
+                    tasks: ['build']
+                },
                 less: {
                     files: appDir + '**/*.less',
                     tasks: ['less']
+                }
+            },
+            concat: {
+                client: {
+                    banner: '/* OKLM.FM buildpack */',
+                    src: [appDir + 'app.js', appDir + 'js/*.js'],
+                    dest: buildDir + 'app.js'
                 }
             }
         });
 
 
-    grunt.registerTask('buildProd', ['less', 'copy:app', 'uglify']);
+    grunt.registerTask('buildProd', ['less', 'copy:app', 'concat:client', 'uglify']);
 
-    grunt.registerTask('build', ['less', 'copy:app'/*, 'uglify'*/]);
+    grunt.registerTask('build', ['less', 'copy:app', 'concat:client']);
     grunt.registerTask('watch', ['watch']);
 
     grunt.registerTask('default', 'build');
