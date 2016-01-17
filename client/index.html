@@ -35,10 +35,6 @@
             </div>
         </div>
 
-        <div class="nonofficiel">
-            Web player non officiel
-        </div>
-
         <div class="slogan" ng-bind="motto">Radio pirate</div>
     </div>
 
@@ -105,11 +101,19 @@
         </div>
     </div>
 
+    <div class="appimg hide-mm">
+        <img src="assets/images/appoklm.jpg"/>
+    </div>
     <div class="apps hide-sm">
         <div class="text noselect">
-            Retrouvez la version officielle sur
+            <p>Ce web player est un site non-officiel.
+            <br/>
+            Si vous appreciez le concept, retrouvez la version officielle et </p>
+            <p>
+                <img src="assets/images/oklmradio.png"/>
+                gratuite sur le site OKLM radio
+            </p>
         </div>
-        <div class="link"><a href="http://www.oklmradio.com/">oklmradio.com</a></div>
         <div class="apps-links">
             <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
             <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
@@ -118,6 +122,10 @@
 
     <div class="history-opener-mobile tl hide-lm" ng-hide="historyOpened" ng-click="openHistory()" class="coo">
         <img src="assets/images/history.png" class="coo" />
+    </div>
+
+    <div class="informations tr hide-lm">
+        Web player non officiel
     </div>
 
     <div class="informations br hide-sm">
