@@ -69,7 +69,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
             onces.firstPlay = false;
         }
         else {
-            ga('send', 'event', 'play');
+            ga('send', 'event', 'mediactrl', 'play');
         }
     };
 
@@ -79,7 +79,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
         $scope.playing = false;
         audioElement.pause();
 
-        ga('send', 'event', 'pause');
+        ga('send', 'event', 'mediactrl', 'pause');
     };
 
     $scope.playpause = function () {
@@ -109,26 +109,16 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
         $('#applestore').click(function() {
             ga('send', 'event', 'mobileapp', 'apple store');
         });
-        $('#informations').click(function() {
-            ga('send', 'event', 'informations');
+        $('#legal').click(function() {
+            ga('send', 'event', 'miscpages', 'informations');
         });
-        $('#deezer-search').click(function() {
-            ga('send', 'event', 'searchsong', 'deezer');
-        });
-        $('#itunes-search').click(function() {
-            ga('send', 'event', 'searchsong', 'itunes');
+        $('#mailto').click(function() {
+            ga('send', 'event', 'miscpages', 'contact');
         });
     };
 
     var updateSongInfo = function(data) {
         $scope.song = data;
-
-        if(data.artist && data.title) {
-            $scope.song.deezerUrl = songService.deezerLink(data);
-        }
-        else {
-            $scope.song.deezerUrl = null;
-        }
 
         if(data.cover) {
             $scope.song.coverUrl = uris.c + data.cover;
