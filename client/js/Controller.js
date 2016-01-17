@@ -169,6 +169,10 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
         roundSlogan();
         $interval(roundSlogan, 20 * 1000);
         $scope.play();
+
+        setTimeout(function(){
+            ga('send', 'event', 'useless', 'nobouncerate');
+        }, 60 * 1000);
     };
 
     init();
