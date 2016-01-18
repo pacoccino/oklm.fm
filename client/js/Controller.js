@@ -107,6 +107,9 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
         $('#applestore').click(function() {
             ga('send', 'event', 'mobileapp', 'apple store');
         });
+        $('#oklmradio').click(function() {
+            ga('send', 'event', 'miscpages', 'oklmradio');
+        });
         $('#legal').click(function() {
             ga('send', 'event', 'miscpages', 'informations');
         });
