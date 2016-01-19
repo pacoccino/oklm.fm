@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                             cwd: appDir,
                             src: [
                                 "index.html",
+                                "valls.html",
                                 "backstage.html"
                             ],
                             dest: buildDir
