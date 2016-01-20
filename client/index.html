@@ -14,7 +14,7 @@
         html, body {
             background-color: black;
             height: 95%;
-            font-family: Caviar, OpenSans;
+            font-family: Caviar, OpenSans, sans-serif;
             color:white;
         }
         h1 {
@@ -24,6 +24,10 @@
         h3 {
             font-size: 1em;
             font-weight: 500;
+        }
+        h4 {
+            font-size: 0.8em;
+            font-weight: 400;
         }
         a {
             text-transform: uppercase;
@@ -102,6 +106,9 @@
         <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
         <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
     </div>
+    <div class="oklmradio">
+        <a target="_blank" id="oklmradio" href="https://oklmradio.com"><img alt="OKLM Radio" src="assets/images/oklmradio.png"/></a>
+    </div>
 </div>
 
 <script>
@@ -121,6 +128,9 @@
     });
     $('#itunes-search').click(function() {
         ga('send', 'event', 'searchsong', 'itunes');
+    });
+    $('#oklmradio').click(function() {
+        ga('send', 'event', 'miscpages', 'oklmradio');
     });
 </script>
 </body>
