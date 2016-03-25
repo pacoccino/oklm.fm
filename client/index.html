@@ -1,137 +1,147 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" ng-app="oklm.fm">
 <head>
+    <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=no">
+
     <meta charset="UTF-8">
-    <title>Informations sur OKLM.fm</title>
+    <title>OKLM.fm - Radio Ratpi</title>
+    <meta name="description" content="Ecoutez la radio OKLM dans votre navigateur. Première sur les nouveautés Rap US & Françaises." />
+    <meta name="keywords" content="oklm radio fm web b2o booba 92i pirate" />
+
     <link rel="stylesheet" href="assets/styles/normalize.css"/>
     <link rel="stylesheet" href="assets/styles/style.css"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
+    <meta property="og:image" content="http://www.oklm.fm/assets/images/logo.png" />
+    <meta name="theme-color" content="#ffffff">
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-
-    <link rel="icon" type="image/png" href="assets/images/favicons/favicon-16x16.png" sizes="16x16">
-
-    <style>
-        html, body {
-            background-color: black;
-            height: 95%;
-            font-family: Caviar, OpenSans, sans-serif;
-            color:white;
-        }
-        h1 {
-            font-size: 1.8em;
-            font-weight: 500;
-        }
-        h3 {
-            font-size: 1em;
-            font-weight: 500;
-        }
-        h4 {
-            font-size: 0.8em;
-            font-weight: 400;
-        }
-        a {
-            text-transform: uppercase;
-            font-size: 0.8em;
-            text-decoration: none;
-            color: white;
-        }
-        a:visited {
-            color: white;
-        }
-        .contact {
-            position: fixed;
-            bottom: 20px;
-            left: 44%;
-        }
-
-        .content {
-            position: relative;
-            top: 10%;
-            max-width: 80%;
-            height: 85%;
-            display: flex;
-            flex-direction: column;
-            align-content: center;
-            justify-content: center;
-            margin: auto;
-            text-align: center;
-        }
-        .apps {
-            margin: 0 auto;
-        }
-        .apps img{
-            height: 60px;
-            border: 1px solid white;
-            border-radius: 5px;
-            margin: 10px 20px;
-            background-color: black;
-        }
-        .bgimg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            opacity: 0.4;
-            width: 100%;
-            height: 100%;
-            background-image:url('assets/images/bgHeadset.jpg');
-            background-repeat:no-repeat;
-            background-size:cover;
-        }
-
-        .noselect {
-            cursor: default;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
+    <script src="//api.oklm.fm/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
 </head>
 <body>
+<div class="main" ng-controller="Ctrl">
+    <div class="album-bg">
+        <img ng-src="{{song.coverUrl}}" id="cover-bg">
+    </div>
 
-<div class="bgimg"></div>
+    <div class="oklm noselect">
+        <div class="logo">
+            <img class="couronne" src="assets/images/logopirate.png">
+            <div class="title">
+                <span class="logotxt">OKLM</span><span class="logofm">.fm</span>
+            </div>
+        </div>
 
-<div class="contact">
-    <a id="mailto" href="mailto:contact@oklm.fm">contact@oklm.fm</a>
+        <div class="slogan" ng-bind="motto">Radio pirate</div>
+    </div>
+
+    <div class="central-panel">
+
+        <div class="album-cover">
+            <img ng-src="{{song.coverUrl}}" id="cover" ng-class="{fade: !playing}">
+            <img src="assets/images/play.png" class="btn-play" id="cover-resume" ng-click="play()" ng-hide="playing">
+            <img src="assets/images/pause.png" class="btn-play" id="cover-pause" ng-click="pause()" ng-show="playing">
+        </div>
+
+        <div class="links hide-sm">
+            <div class="link">
+                <a id="deezer-search" title="Chercher sur Deezer" ng-click="openExternal(song, 'deezer')"><img src="assets/images/deezer.png"></a>
+            </div>
+            <div class="link">
+                <a id="itunes-search" title="Acheter sur iTunes" ng-click="openExternal(song, 'itunes')" ng-show="song.buy_link"><img src="assets/images/itunes.png"></a>
+            </div>
+        </div>
+
+        <div class="history-opener hide-sm" ng-click="openHistory()" class="coo">
+            <img src="assets/images/history.png" class="coo" />
+        </div>
+    </div>
+
+    <div class="songinfo">
+        <span class="artist" ng-bind="song.artist"></span>
+        <span ng-show="song && song.artist && song.title"> - </span>
+        <span class="title" ng-bind="song.title"></span>
+    </div>
+
+    <div class="history-container" ng-show="historyOpened">
+        <div class="history" clickout clickout-fn="closeHistory" ng-class="{open: historyOpenedD}">
+            <div class="history-header noselect">
+                Historique
+            </div>
+            <div class="songs-container">
+                <table class="songs">
+                    <tr class="song" ng-repeat="histSong in history">
+                        <td class="songname">
+                            <span class="artist" ng-bind="histSong.artist"></span>
+                            <span ng-show="histSong && histSong.artist && histSong.title"> - </span>
+                            <span class="title" ng-bind="histSong.title"></span>
+                        </td>
+                        <td class="link hide-sm">
+                            <a class="hover-act" title="Acheter sur iTunes" ng-click="openExternal(histSong, 'itunes')" ng-show="histSong.buy_link"><img src="assets/images/itunes.png"></a>
+                        </td>
+                        <td class="link hide-sm">
+                            <a class="hover-act" title="Chercher sur Deezer" ng-click="openExternal(histSong, 'deezer')"><img src="assets/images/deezer.png"></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="history-footer">
+                <img ng-src="{{playing ? 'assets/images/pause.png' : 'assets/images/play.png'}}" ng-click="playpause()"/>
+                <span class="artist" ng-bind="song.artist"></span>
+                <span ng-show="song && song.artist && song.title"> - </span>
+                <span class="title" ng-bind="song.title"></span>
+            </div>
+
+            <div class="close-btn">
+                <img src="assets/images/close.png" id="history-close-btn" ng-click="closeHistory()"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="appimg hide-mm">
+        <img src="assets/images/appoklm.jpg"/>
+    </div>
+    <div class="apps hide-sm">
+        <div class="text noselect">
+            <p>Ce web player est un site non-officiel.
+                <br/>
+                Si vous appreciez le concept, retrouvez la version officielle et </p>
+            <p>
+                <a target="_blank" href="http://oklmradio.com"><img src="assets/images/oklmradio.png"/></a>
+                gratuite sur le site OKLM radio
+            </p>
+        </div>
+        <div class="apps-links">
+            <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
+            <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
+        </div>
+    </div>
+
+    <div class="history-opener-mobile tl hide-lm" ng-hide="historyOpened" ng-click="openHistory()" class="coo">
+        <img src="assets/images/history.png" class="coo" />
+    </div>
+
+    <div class="informations tr hide-lm">
+        Web player non officiel
+    </div>
+
+    <div class="informations br hide-sm">
+        <p><a target="_blank" id="legal" href="backstage.html">Informations légales</a></p>
+        <p><a id="mailto" href="mailto:contact@oklm.fm">Contact</a></p>
+    </div>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-68373171-3', 'auto');
+        ga('send', 'pageview');
+    </script>
 </div>
-
-<div class="content">
-    <div class="info noselect">
-        <h1>OKLM.fm revient bientôt !</h1>
-        <h3>En attendant retrouvez les applications mobiles:</h3>
-    </div>
-    <div class="apps">
-        <a target="_blank" id="playstore" href="https://play.google.com/store/apps/details?id=com.monagencemobile.oklmradio"><img alt="Disponible sur Google Play" src="https://play.google.com/intl/en_us/badges/images/apps/fr-play-badge.png" /></a>
-        <a target="_blank" id="applestore" href="https://itunes.apple.com/us/app/oklm-radio/id1059724490"><img alt="Disponible sur l'Apple Store" src="assets/images/applestore.svg" /></a>
-    </div>
-    <div class="oklmradio">
-        <a target="_blank" id="oklmradio" href="https://oklmradio.com"><img alt="OKLM Radio" src="assets/images/oklmradio.png"/></a>
-    </div>
-</div>
-
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-68373171-3', 'auto');
-    ga('send', 'pageview');
-
-    $('#mailto').click(function() {
-        ga('send', 'event', 'miscpages', 'unavailable');
-    });
-    $('#deezer-search').click(function() {
-        ga('send', 'event', 'searchsong', 'deezer');
-    });
-    $('#itunes-search').click(function() {
-        ga('send', 'event', 'searchsong', 'itunes');
-    });
-    $('#oklmradio').click(function() {
-        ga('send', 'event', 'miscpages', 'oklmradio');
-    });
-</script>
 </body>
 </html>
