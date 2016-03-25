@@ -3,7 +3,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
     var audioElement = null;
 
     var uris = {
-        r: "http://163.172.6.199/radio/30933",
+        r: "http://163.172.6.199/radio/3093",
         c: "http://oklmtitle.radioking.fr/api/track/cover/"
     };
 
