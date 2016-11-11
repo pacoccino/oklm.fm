@@ -8,6 +8,7 @@
     "start": "pm2 start config/pm2-thrifty.json",
     "postinstall": "npm run build",
     "build": "grunt buildProd",
+    "thrifty": "node ./server/services/thrifty.js",
     "service-crawler": "node ./server/services/crawler.js",
     "service-api": "node ./server/services/api.js",
     "service-static": "node ./server/services/static.js",

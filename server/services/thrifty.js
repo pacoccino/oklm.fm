@@ -6,6 +6,7 @@ var Logger = require('./../modules/logger');
 var ApiServer = require('./../modules/api');
 var Crawler = require('./../modules/crawler');
 var WebServer = require('../modules/static');
+const Config = require('../modules/config');
 
 Logger.fileLogByLaunchTime("thrifty");
 Logger.info("Starting all-in-one server...");
@@ -13,7 +14,7 @@ Logger.info("Starting all-in-one server...");
 var apiServer = new ApiServer();
 var crawler = new Crawler();
 
-WebServer.initExpress();
+WebServer.initExpress(Config.static);
 
 apiServer.initializeApiServer(WebServer.app);
 apiServer.linkConnector(connector);
