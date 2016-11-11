@@ -11,32 +11,18 @@ var Logger = require('./logger');
 
 class Api {
 
-    constructor(connector) {
-        if(!connector) return;
+    constructor() {
 
         this.songInfo = null;
         this.songHistory = null;
-
-        this.initializeApiServer();
-        this.linkConnector(connector);
     }
 
-    initializeApiServer() {
-
+    initializeApiServer(app) {
         var self = this;
-        var app = express();
 
-        app.set('port', Config.api.port);
-        
         app.use(function(req, res, next){
             Logger.silly(`New connection on process api ${process.pid}`);
-
             next();
-        });
-        
-        app.server = http.createServer(app);
-        app.server.listen(app.get('port'), () => {
-            Logger.info(`API server listen on ${app.get('port')}`);
         });
 
         self.io = socketio(app.server);

@@ -7,25 +7,34 @@ const compression = require('compression');
 const Logger = require('../modules/logger');
 const Config = require('../modules/config');
 
-var WebServer = {};
+const WebServer = {};
 
-const app = express();
+WebServer.app = express();
 
-WebServer.launch = function() {
+WebServer.initExpress = function(config) {
+    const app = WebServer.app;
 
-    app.set('port', Config.static.port);
+    config = config || {
+            port: 3000
+        };
 
-    app.use(compression());
-
-    app.use(express.static(Config.static.publicFolder, { maxAge: Config.static.cache })); // TODO morgan-logger
+    app.set('port', config.port);
 
     app.server = http.createServer(app);
+};
 
+WebServer.listen = function() {
+    const app = WebServer.app;
     app.server.listen(app.get('port'), () => {
-
-        Logger.info(`Static server listen on ${app.get('port')}`);
-
+        Logger.info(`Server listen on ${app.get('port')}`);
     });
+};
+
+WebServer.static = function() {
+    const app = WebServer.app;
+
+    app.use(compression());
+    app.use(express.static(Config.static.publicFolder, { maxAge: Config.static.cache })); // TODO morgan-logger
 };
 
 module.exports = WebServer;

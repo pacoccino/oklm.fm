@@ -16,8 +16,10 @@ connector.listenAsCrawler(function(error) {
     throw error;
     
   } else {
-    
-    var crawler = new Crawler(connector);
+    var crawler = new Crawler();
+
+    crawler.linkConnector(connector);
+    crawler.initCrawler();
   }
 
 });

@@ -161,7 +161,7 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
         }
         audiolink();
 
-        var socket = io('http://api.oklm.fm');
+        var socket = io('/');
         socket.on('songinfo', asyncAngularify(updateSongInfo));
         socket.on('songhistory', asyncAngularify(updateSongHistory));
 

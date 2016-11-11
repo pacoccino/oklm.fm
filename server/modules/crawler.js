@@ -7,17 +7,13 @@ var Logger = require('./logger');
 
 class CrawlWorker {
 
-    constructor(connector) {
+    constructor() {
         this.songState = {
             artist: null,
             title: null
         };
 
         this.songHistory = [];
-
-        this.linkConnector(connector);
-
-        this.initCrawler();
 
         Logger.info("Crawler ready");
     }
