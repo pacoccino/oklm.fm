@@ -1,4 +1,4 @@
-angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'songService', function($scope, $interval, $timeout, $window, songService) {
+angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'songService', '$location', function($scope, $interval, $timeout, $window, songService, $location) {
 
     var audioElement = null;
 
@@ -22,6 +22,8 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
     $scope.history = [];
     $scope.historyOpened = false;
     $scope.historyOpenedD = false;
+
+    $scope.newUrlAlert = false;
 
     var onces = {
         firstPlay: true
@@ -47,6 +49,10 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
                 $scope.historyOpened = false;
             }, 700);
         }
+    };
+    $scope.closeNewUrlAlert = function() {
+        ga('send', 'event', 'newUrl', 'href');
+        $scope.newUrlAlert= false;
     };
 
     var safePlay = function () {
@@ -174,6 +180,12 @@ angularApp.controller('Ctrl', ['$scope', '$interval', '$timeout', '$window', 'so
         setTimeout(function(){
             ga('send', 'event', 'useless', 'nobouncerate');
         }, 60 * 1000);
+
+        // if(/(.*)localhost(.*)/.test($location.absUrl())) {
+        if(/(.*)oklm\.fm(.*)/.test($location.absUrl())) {
+        // if(/(.*)oklm\.ngfar\.io(.*)/.test($location.absUrl())) {
+            $scope.newUrlAlert = true;
+        }
     };
 
     init();

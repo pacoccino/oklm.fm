@@ -133,6 +133,17 @@
         <p><a id="mailto" href="mailto:contact@oklm.fm">Contact</a></p>
     </div>
 
+    <div class="newUrl" ng-show="newUrlAlert">
+        <div class="close" ng-click="closeNewUrlAlert()">X</div>
+        <span>
+            Attention, oklm.fm va bientôt changer d'adresse. <br />
+            Veuillez dès maintenant utiliser la suivante: <br />
+        </span><br />
+        <span class="link">
+            <a href="https://oklm.ngfar.io">oklm.ngfar.io</a>
+        </span>
+    </div>
+
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
